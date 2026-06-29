@@ -29,7 +29,7 @@ namespace Components {
       //! Destroy Led object
       ~Led();
 
-    PRIVATE:
+    private:
 
       // ----------------------------------------------------------------------
       // Handler implementations for commands
@@ -47,7 +47,7 @@ namespace Components {
       U32 m_toggleCounter = 0; //! Keeps track of how many ticks the LED has been on for
       bool m_blinking = false; //! Flag: if true then LED blinking will occur else no blinking will happen
 
-    PRIVATE:
+    private:
 
     // ----------------------------------------------------------------------
     // Handler implementations for typed input ports
