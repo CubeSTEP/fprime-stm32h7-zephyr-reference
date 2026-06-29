@@ -6,3 +6,5 @@ path = zephyr
 group-filter = -hal,-debug
 project-filter = -.*,+hal_stm32,+cmsis,+cmsis_6
 
+
+file = west.yml

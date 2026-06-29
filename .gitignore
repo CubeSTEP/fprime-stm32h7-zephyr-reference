@@ -17,6 +17,7 @@ lib/zephyr-workspace/*
 /.vscode/
 .DS_Store
 *.gcov
+.cache
 
 # Ignore local CMake build
 cmake-3.27.9*
