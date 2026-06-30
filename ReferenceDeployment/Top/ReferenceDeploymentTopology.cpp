@@ -45,6 +45,9 @@ enum TopologyConstants {
  * desired, but is extracted here for clarity.
  */
 void configureTopology() {
+    // The rate driver period is in milliseconds; rate groups are driven at 1Hz.
+    rateDriver.configure(1000);
+
     // Rate group driver needs a divisor list
     rateGroupDriver.configure(rateGroupDivisorsSet);
 
