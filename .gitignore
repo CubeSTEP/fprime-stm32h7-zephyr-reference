@@ -6,9 +6,11 @@ build-fprime-*
 *-template
 *.template.cpp
 *.template.hpp
-
+compile_commands.json
+.clangd
 # Zephyr workspace
 lib/zephyr-workspace/*
+ReferenceDeployment_Old
 
 # Misc
 /venv/

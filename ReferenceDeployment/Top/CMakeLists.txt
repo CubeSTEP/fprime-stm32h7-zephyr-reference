@@ -1,36 +1,22 @@
 ####
-# F prime CMakeLists.txt:
+# F Prime CMakeLists.txt:
 #
-# SOURCE_FILES: combined list of source and autocoding files
-# MOD_DEPS: (optional) module dependencies
+# SOURCES: list of source files (to be compiled)
+# AUTOCODER_INPUTS: list of files to be passed to the autocoders
+# DEPENDS: list of libraries that this module depends on
+#
+# More information in the F´ CMake API documentation:
+# https://fprime.jpl.nasa.gov/latest/docs/reference/api/cmake/API/
+#
 ####
 
-# set(SOURCE_FILES
-#   "${CMAKE_CURRENT_LIST_DIR}/instances.fpp"
-#   # Note: Uncomment when using Svc:TlmPacketizer
-#   #"${CMAKE_CURRENT_LIST_DIR}/ReferenceDeploymentPackets.xml"
-#   "${CMAKE_CURRENT_LIST_DIR}/topology.fpp"
-#   "${CMAKE_CURRENT_LIST_DIR}/ReferenceDeploymentTopology.cpp"
-# )
-# set(MOD_DEPS
-#   Fw/Logger
-#   # Communication Implementations
-#   Drv/Udp
-#   Drv/TcpClient
-# )
-
-# register_fprime_module()
-
-set(SPECIFIC_INSTANCES "${CMAKE_CURRENT_LIST_DIR}/instances-native.fpp")
-if ("${FPRIME_PLATFORM}" STREQUAL Zephyr)
-    set(SPECIFIC_INSTANCES "${CMAKE_CURRENT_LIST_DIR}/instances-zephyr.fpp")
-endif()
 register_fprime_module(
     AUTOCODER_INPUTS
         "${CMAKE_CURRENT_LIST_DIR}/instances.fpp"
-        "${SPECIFIC_INSTANCES}"
         "${CMAKE_CURRENT_LIST_DIR}/topology.fpp"
     SOURCES
         "${CMAKE_CURRENT_LIST_DIR}/ReferenceDeploymentTopology.cpp"
+    DEPENDS
+        Fw_Logger
+        Svc_Subtopologies_ComFprime
 )
-

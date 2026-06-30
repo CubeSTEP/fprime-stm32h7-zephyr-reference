@@ -2,7 +2,11 @@
 
 constant FW_CONSOLE_HANDLE_MAX_SIZE = 24
 
+# For non Debug Builds use 
 constant FW_TASK_HANDLE_MAX_SIZE = 244
+
+#Debug Handle Size
+# constant FW_TASK_HANDLE_MAX_SIZE = 272
 
 constant FW_FILE_HANDLE_MAX_SIZE = 16
 

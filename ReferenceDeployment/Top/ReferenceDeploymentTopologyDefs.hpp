@@ -6,28 +6,25 @@
 #ifndef REFERENCEDEPLOYMENT_REFERENCEDEPLOYMENTTOPOLOGYDEFS_HPP
 #define REFERENCEDEPLOYMENT_REFERENCEDEPLOYMENTTOPOLOGYDEFS_HPP
 
-// #include "Drv/BlockDriver/BlockDriver.hpp"
 #include "Fw/Types/MallocAllocator.hpp"
 #include "ReferenceDeployment/Top/FppConstantsAc.hpp"
-#include "Svc/FprimeProtocol/FrameHeaderSerializableAc.hpp"
-#include "Svc/FprimeProtocol/FrameTrailerSerializableAc.hpp"
+
+#include "Svc/Subtopologies/ComFprime/SubtopologyTopologyDefs.hpp"
+#include "Svc/Subtopologies/ComFprime/Ports_ComBufferQueueEnumAc.hpp"
+#include "Svc/Subtopologies/ComFprime/Ports_ComPacketQueueEnumAc.hpp"
 #include "Svc/Health/Health.hpp"
 #include <zephyr/drivers/uart.h>
+// ComFprime subtopology configuration phases expect these support objects
+// to be provided by the deployment.
+namespace ComFprime {
+    namespace Detector {
+        extern Svc::FrameDetectors::FprimeFrameDetector frameDetector;
+    }
 
-// Definitions are placed within a namespace named after the deployment
-namespace ReferenceDeployment {
-
-/**
- * \brief required type definition to carry state
- *
- * The topology autocoder requires an object that carries state with the name `ReferenceDeployment::TopologyState`. Only the type
- * definition is required by the autocoder and the contents of this object are otherwise opaque to the autocoder. The contents are entirely up
- * to the definition of the project. Here, they are derived from command line inputs.
- */
-struct TopologyState {
-    const device* uartDevice;
-    U32 baudRate;
-};
+    namespace BufferManagerBins {
+        extern Svc::BufferManager::BufferBins bins;
+    }
+}
 
 /**
  * \brief required ping constants
@@ -49,42 +46,25 @@ struct TopologyState {
  * ```
  */
 namespace PingEntries {
-// namespace ReferenceDeployment_blockDrv {
-// enum { WARN = 3, FATAL = 5 };
-// }
-namespace ReferenceDeployment_tlmSend {
-enum { WARN = 3, FATAL = 5 };
-}
-namespace ReferenceDeployment_cmdDisp {
-enum { WARN = 3, FATAL = 5 };
-}
-namespace ReferenceDeployment_cmdSeq {
-enum { WARN = 3, FATAL = 5 };
-}
-namespace ReferenceDeployment_eventLogger {
-enum { WARN = 3, FATAL = 5 };
-}
-namespace ReferenceDeployment_fileDownlink {
-enum { WARN = 3, FATAL = 5 };
-}
-namespace ReferenceDeployment_fileManager {
-enum { WARN = 3, FATAL = 5 };
-}
-namespace ReferenceDeployment_fileUplink {
-enum { WARN = 3, FATAL = 5 };
-}
-namespace ReferenceDeployment_prmDb {
-enum { WARN = 3, FATAL = 5 };
-}
-namespace ReferenceDeployment_rateGroup1 {
-enum { WARN = 3, FATAL = 5 };
-}
-namespace ReferenceDeployment_rateGroup2 {
-enum { WARN = 3, FATAL = 5 };
-}
-namespace ReferenceDeployment_rateGroup3 {
-enum { WARN = 3, FATAL = 5 };
-}
+    namespace ReferenceDeployment_tlmSend      {enum { WARN = 3, FATAL = 5 };}
+    namespace ReferenceDeployment_cmdDisp      {enum { WARN = 3, FATAL = 5 };}
+    namespace ReferenceDeployment_eventLogger  {enum { WARN = 3, FATAL = 5 };}
+    namespace ReferenceDeployment_rateGroup1   {enum { WARN = 3, FATAL = 5 };}
 }  // namespace PingEntries
+
+// Definitions are placed within a namespace named after the deployment
+namespace ReferenceDeployment {
+    /**
+     * \brief required type definition to carry state
+     *
+     * The topology autocoder requires an object that carries state with the name `{{cookiecutter.deployment_name}}::TopologyState`. Only the type
+     * definition is required by the autocoder and the contents of this object are otherwise opaque to the autocoder. The
+     * contents are entirely up to the definition of the project. This reference application specifies hostname and port
+     * fields, which are derived by command line inputs.
+     */
+    struct TopologyState {
+        const device* uartDevice;
+        PlatformIntType uartBaud;
+    };
 }  // namespace ReferenceDeployment
 #endif
