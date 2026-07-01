@@ -1,0 +1,15 @@
+diff --git a/boot/zephyr/prj.conf b/boot/zephyr/prj.conf
+index b824ca1b..c59ca76f 100644
+--- a/boot/zephyr/prj.conf
++++ b/boot/zephyr/prj.conf
+@@ -29,3 +29,10 @@ CONFIG_CBPRINTF_NANO=y
+ CONFIG_PICOLIBC=y
+ ### Disable malloc arena because we don't need it
+ CONFIG_COMMON_LIBC_MALLOC_ARENA_SIZE=0
++
++
++# stupid additional configs
++CONFIG_BOOT_SIGNATURE_TYPE_ECDSA_P256=y
++CONFIG_BOOT_ECDSA_TINYCRYPT=y
++CONFIG_BOOT_SIGNATURE_KEY_FILE="root-ec-p256.pem" #CHANGETHISAFTERTHIISWORKSSSS!!
++CONFIG_BOOT_VALIDATE_SLOT0=n

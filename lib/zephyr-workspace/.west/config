@@ -3,8 +3,10 @@ base = zephyr
 
 [manifest]
 path = zephyr
-group-filter = -hal,-debug
-project-filter = -.*,+hal_stm32,+cmsis,+cmsis_6
-
-
+group-filter = +bootloader,-hal,-debug
+project-filter = +cmsis,+cmsis_6,+hal_stm32,+mcuboot,-nrf_hw_models
 file = west.yml
+
+[build]
+sysbuild = false 
+

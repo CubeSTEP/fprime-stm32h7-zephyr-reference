@@ -1,0 +1,13 @@
+diff --git a/boards/st/nucleo_h723zg/nucleo_h723zg.dts b/boards/st/nucleo_h723zg/nucleo_h723zg.dts
+index 9da0ffd3fc0..6b096568472 100644
+--- a/boards/st/nucleo_h723zg/nucleo_h723zg.dts
++++ b/boards/st/nucleo_h723zg/nucleo_h723zg.dts
+@@ -253,7 +253,7 @@ zephyr_udc0: &usbotg_hs {
+         
+         storage_partition: partition@e2000 {
+             label = "storage";
+-            reg = <0x000e2000 DT_SIZE_K(120>;
++            reg = <0x000e2000 DT_SIZE_K(120)>;
+         };
+     };
+ };
