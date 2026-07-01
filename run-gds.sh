@@ -1,0 +1,1 @@
+fprime-gds -n --dictionary build-artifacts/zephyr/fprime-zephyr-deployment/dict/ReferenceDeploymentTopologyDictionary.json --communication-selection uart --uart-device /dev/cu.usbmodem21303 --uart-baud 115200 --framing-selection fprime

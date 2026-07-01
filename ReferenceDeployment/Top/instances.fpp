@@ -6,7 +6,7 @@ module ReferenceDeployment {
 
   module Default {
     constant QUEUE_SIZE = 3
-    constant STACK_SIZE = 5 * 1024
+    constant STACK_SIZE = 4 * 1024
   }
 
   # ----------------------------------------------------------------------

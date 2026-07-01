@@ -29,7 +29,7 @@ extern "C" {
 // Allow objects to have names. Allocates storage for each instance
 #ifndef FW_OBJECT_NAMES
 #define FW_OBJECT_NAMES \
-    (1)  //!< Indicates whether or not object names are stored (more memory, can be used for tracking objects)
+    (0)  //!< Indicates whether or not object names are stored (more memory, can be used for tracking objects)
 #endif
 
 // To reduce binary size, FW_OPTIONAL_NAME(<string>) can be used to substitute strings with an empty string
@@ -55,11 +55,11 @@ extern "C" {
 // centrally.
 #ifndef FW_OBJECT_REGISTRATION
 #define FW_OBJECT_REGISTRATION \
-    (1)  //!< Indicates whether or not objects can register themselves (more code, more object tracking)
+    (0)  //!< Indicates whether or not objects can register themselves (more code, more object tracking)
 #endif
 
 #ifndef FW_QUEUE_REGISTRATION
-#define FW_QUEUE_REGISTRATION (1)  //!< Indicates whether or not queue registration is used
+#define FW_QUEUE_REGISTRATION (0)  //!< Indicates whether or not queue registration is used
 #endif
 
 // On some systems, use of *printf family functions (snprintf, printf, etc) require a prohibitive amount of program
@@ -74,7 +74,7 @@ extern "C" {
 
 // This allows tracing calls through ports for debugging
 #ifndef FW_PORT_TRACING
-#define FW_PORT_TRACING (1)  //!< Indicates whether port calls are traced (more code, more visibility into execution)
+#define FW_PORT_TRACING (0)  //!< Indicates whether port calls are traced (more code, more visibility into execution)
 #endif
 
 // This generates code to connect to serialized ports
