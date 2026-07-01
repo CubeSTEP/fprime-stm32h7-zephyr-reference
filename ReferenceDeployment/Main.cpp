@@ -14,8 +14,8 @@
 #include <Fw/Logger/Logger.hpp>
 #include <Fw/Types/Assert.hpp>
 
-// const struct device *serial = DEVICE_DT_GET(DT_NODELABEL(usart1)); // For STM32H753I-EVAL
-const struct device *uart_device = DEVICE_DT_GET(DT_NODELABEL(usart3)); // For NUCLEO-STM32H723ZG
+#define FPRIME_UART_NODE DT_CHOSEN(zephyr_console)
+const struct device *uart_device = DEVICE_DT_GET(FPRIME_UART_NODE);
 
 /**
  * \brief execute the program
