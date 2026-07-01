@@ -19,4 +19,5 @@ register_fprime_module(
     DEPENDS
         Fw_Logger
         Svc_Subtopologies_ComFprime
+        Svc_Subtopologies_FileHandling
 )
