@@ -1,0 +1,29 @@
+/ {
+    fstab {
+        compatible = "zephyr,fstab";
+        lfs1: lfs1 {
+            compatible = "zephyr,fstab,littlefs";
+            read-size = <32>;
+            prog-size = <32>;
+            cache-size = <64>;
+            lookahead-size = <32>;
+            block-cycles = <512>;
+            mount-point = "/littlefs";
+            partition = <&little_fs_partition>;
+            automount;
+        };
+    };
+};
+ 
+&flash0 {
+    partitions {
+        compatible = "fixed-partitions";
+        #address-cells = <1>;
+        #size-cells = <1>;
+ 
+        little_fs_partition: partition@20000 {
+            label = "storage";
+            reg = <0x00060000 DT_SIZE_K(256)>;
+        };
+    };
+};

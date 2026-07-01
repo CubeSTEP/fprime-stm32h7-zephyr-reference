@@ -8,9 +8,11 @@ build-fprime-*
 *.template.hpp
 compile_commands.json
 .clangd
+
 # Zephyr workspace
 lib/zephyr-workspace/*
 ReferenceDeployment_Old
+
 
 # Misc
 /venv/
@@ -20,6 +22,8 @@ ReferenceDeployment_Old
 .DS_Store
 *.gcov
 .cache
+build/
+flashing_and_gds.txt
 
 # Ignore local CMake build
 cmake-3.27.9*
