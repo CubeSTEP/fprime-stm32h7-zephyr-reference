@@ -75,6 +75,9 @@ cd ../../
 echo "==> Returned to Directory:"
 pwd
 
+echo "==> Preparing for the build system"
+fprime-util purge -f
+
 echo "==> Generating F´ build system..."
 fprime-util generate
 
