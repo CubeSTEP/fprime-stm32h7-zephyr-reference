@@ -1,0 +1,18 @@
+diff --git a/setup.sh b/setup.sh
+index 0be6024..bb1a6b4 100755
+--- a/setup.sh
++++ b/setup.sh
+@@ -71,6 +71,13 @@ west update
+ west zephyr-export
+ west sdk install
+ 
++# START
++cd bootloader/mcuboot/boot/zephyr
++west build --no-sysbuild -b nucleo_h723zg
++# END
++
++
++
+ cd ../../
+ echo "==> Returned to Directory:"
+ pwd

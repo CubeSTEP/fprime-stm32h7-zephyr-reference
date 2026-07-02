@@ -1,0 +1,11 @@
+diff --git a/boot/zephyr/app.overlay b/boot/zephyr/app.overlay
+index 74d3dfbf..df265bdd 100644
+--- a/boot/zephyr/app.overlay
++++ b/boot/zephyr/app.overlay
+@@ -1,3 +1,6 @@
++#include "../../../../../../dts_config/nucleo_h723zg.dtsi"
++
++
+ / {
+ 	chosen {
+ 		zephyr,code-partition = &boot_partition;
