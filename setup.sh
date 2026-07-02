@@ -64,6 +64,9 @@ echo "==> Entered Directory:"
 pwd
 
 echo "==> Updating Zephyr workspace..."
+# START: CubeSTEP CERBERUS SPECIFIC
+west config manifest.project-filter -- "-.*,+hal_stm32,+cmsis,+cmsis_6,+littlefs,+mcuboot"
+# END
 west update
 west zephyr-export
 west sdk install
