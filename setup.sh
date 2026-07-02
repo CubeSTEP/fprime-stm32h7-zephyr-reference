@@ -1,6 +1,13 @@
 #!/bin/bash
 
 set -e  # Exit on any error
+PROJECT_ROOT="$(pwd)"
+BOARD="N/A"
+
+if [ BOARD == "N/A" ]; then
+    echo "Make sure to apply the patches in respect to your board FIRST."
+    exit 1
+fi
 
 # Detect OS
 OS="$(uname -s)"
@@ -71,7 +78,12 @@ west update
 west zephyr-export
 west sdk install
 
-cd ../../
+# START
+# END
+
+
+
+cd "$PROJECT_ROOT" 
 echo "==> Returned to Directory:"
 pwd
 
