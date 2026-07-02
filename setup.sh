@@ -47,6 +47,7 @@ echo "==> Current Directory:"
 pwd
 
 echo "==> Fetching git submodules..."
+git submodule sync --recursive
 git submodule update --recursive --init
 
 # Check subdirectory
