@@ -14,6 +14,7 @@
 #include "Svc/Subtopologies/ComFprime/Ports_ComPacketQueueEnumAc.hpp"
 #include "Svc/Subtopologies/FileHandling/SubtopologyTopologyDefs.hpp"
 #include "Svc/Health/Health.hpp"
+
 #include <zephyr/drivers/uart.h>
 // ComFprime subtopology configuration phases expect these support objects
 // to be provided by the deployment.
