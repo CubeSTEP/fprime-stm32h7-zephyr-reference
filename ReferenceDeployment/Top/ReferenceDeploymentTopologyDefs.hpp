@@ -64,6 +64,7 @@ namespace ReferenceDeployment {
      */
     struct TopologyState {
         const device* uartDevice;
+        const device* i2cDevice;
         PlatformIntType uartBaud;
     };
 }  // namespace ReferenceDeployment

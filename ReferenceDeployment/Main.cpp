@@ -17,6 +17,9 @@
 #define FPRIME_UART_NODE DT_CHOSEN(zephyr_console)
 const struct device *uart_device = DEVICE_DT_GET(FPRIME_UART_NODE);
 
+#define FPRIME_I2C_NODE DT_NODELABEL(i2c1)
+const struct device *i2c_device = DEVICE_DT_GET(FPRIME_I2C_NODE); 
+
 /**
  * \brief execute the program
  *
@@ -36,7 +39,7 @@ int main(int argc, char* argv[]) {
     U32 baud_rate = 115200;
     inputs.uartDevice = uart_device;
     inputs.uartBaud = baud_rate;
-    
+    inputs.i2cDevice = i2c_device;
     Fw::Logger::log("[F Prime] Initializing topology\n");
     ReferenceDeployment::setupTopology(inputs);
     Fw::Logger::log("[F Prime] Entering main loop\n");

@@ -82,6 +82,7 @@ void setupTopology(const TopologyState& state) {
     startTasks(state);
   // Uplink is configured for receive so a socket task is started
     comDriver.configure(state.uartDevice, state.uartBaud);
+    i2cDriver.open(state.i2cDevice);
     // Start rate groups
     rateDriver.start();
 
