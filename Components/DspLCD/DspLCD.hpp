@@ -29,12 +29,12 @@ class DspLCD final : public DspLCDComponentBase {
     // Handler implementations for commands
     // ----------------------------------------------------------------------
 
-    //! Handler implementation for command LCDI2CBusWrite
+    //! Handler implementation for command LCDI2CTransmit
     //!
-    //! TODO
-    void LCDI2CBusWrite_cmdHandler(FwOpcodeType opCode,  //!< The opcode
+    //! Send the fixed TS3510 I2C probe when requested
+    void LCDI2CTransmit_cmdHandler(FwOpcodeType opCode,  //!< The opcode
                                    U32 cmdSeq,           //!< The command sequence number
-                                   U32 data              //!< Data to write to the I2C bus
+                                   Fw::On transmit       //!< Whether to transmit the I2C probe
                                    ) override;
 };
 

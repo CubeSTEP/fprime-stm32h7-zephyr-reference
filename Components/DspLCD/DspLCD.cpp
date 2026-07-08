@@ -29,8 +29,12 @@ DspLCD ::~DspLCD() {}
 // Handler implementations for commands
 // ----------------------------------------------------------------------
 
-void DspLCD ::LCDI2CBusWrite_cmdHandler(FwOpcodeType opCode, U32 cmdSeq, U32 data) {
-    static_cast<void>(data);
+void DspLCD ::LCDI2CTransmit_cmdHandler(FwOpcodeType opCode, U32 cmdSeq, Fw::On transmit) {
+    if (transmit != Fw::On::ON) {
+        this->log_ACTIVITY_HI_I2cTransmitSkipped();
+        this->cmdResponse_out(opCode, cmdSeq, Fw::CmdResponse::OK);
+        return;
+    }
 
     if (!this->isConnected_busWrite_OutputPort(0) || !this->isConnected_busWriteRead_OutputPort(0)) {
         this->log_WARNING_HI_I2cError(TS3510_I2C_ADDRESS, Drv::I2cStatus::I2C_OTHER_ERR);

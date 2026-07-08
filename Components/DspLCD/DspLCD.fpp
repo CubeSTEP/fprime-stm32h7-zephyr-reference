@@ -5,8 +5,8 @@ module Components {
         # One async command/port is required for active components
         # This should be overridden by the developers with a useful command/port
         @ TODO
-        async command LCDI2CBusWrite (
-            data: U32 @< Data to write to the I2C bus
+        async command LCDI2CTransmit (
+            transmit: Fw.On @< Send the fixed TS3510 I2C probe when ON; skip when OFF
         ) opcode 0
         
         ##############################################################################
@@ -35,6 +35,10 @@ module Components {
             address: U32,
             response: U32
         ) severity activity high format "I2C read from address {} returned {}"
+
+        event I2cTransmitSkipped() \
+            severity activity high \
+            format "I2C transmit skipped"
 
         ###############################################################################
         # Standard AC Ports: Required for Channels, Events, Commands, and Parameters  #

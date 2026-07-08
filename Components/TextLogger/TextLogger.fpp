@@ -40,5 +40,14 @@ module Components {
 
         @ Enables telemetry channels handling
         import Fw.Channel
+
+        ###############################################################################
+        #                                UART ports                                   #
+        ###############################################################################
+        output port uartSend: Drv.ByteStreamSend
+
+        guarded input port uartRecv: Drv.ByteStreamData
+
+        output port uartRecvReturn: Fw.Buff
     }
 }
