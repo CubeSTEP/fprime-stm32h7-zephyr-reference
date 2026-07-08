@@ -4,12 +4,12 @@
 // \brief  hpp file for DspLCD component implementation class
 // ======================================================================
 
-#ifndef ReferenceDeployment_DspLCD_HPP
-#define ReferenceDeployment_DspLCD_HPP
+#ifndef Components_DspLCD_HPP
+#define Components_DspLCD_HPP
 
 #include "Components/DspLCD/DspLCDComponentAc.hpp"
 
-namespace ReferenceDeployment {
+namespace Components {
 
 class DspLCD final : public DspLCDComponentBase {
   public:
@@ -20,22 +20,10 @@ class DspLCD final : public DspLCDComponentBase {
     //! Construct DspLCD object
     DspLCD(const char* const compName  //!< The component name
     );
-
+  
     //! Destroy DspLCD object
     ~DspLCD();
-
-  private:
-    // ----------------------------------------------------------------------
-    // Handler implementations for typed input ports
-    // ----------------------------------------------------------------------
-
-    //! Handler implementation for run
-    //!
-    //! Scheduling port for reading from DSP LCD Connector and writing to telemetry
-    void run_handler(FwIndexType portNum,  //!< The port number
-                     U32 context           //!< The call order
-                     ) override;
-
+    
   private:
     // ----------------------------------------------------------------------
     // Handler implementations for commands
@@ -50,6 +38,6 @@ class DspLCD final : public DspLCDComponentBase {
                                    ) override;
 };
 
-}  // namespace ReferenceDeployment
+}  // namespace Components
 
 #endif

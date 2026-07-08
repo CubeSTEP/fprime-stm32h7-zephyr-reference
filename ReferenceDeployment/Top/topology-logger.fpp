@@ -14,8 +14,6 @@ module ReferenceDeployment {
     # Subtopology instances
     # ----------------------------------------------------------------------
 
-    instance ComFprime.Subtopology
-
     # ----------------------------------------------------------------------
     # Instances used in the topology
     # ----------------------------------------------------------------------
@@ -39,6 +37,9 @@ module ReferenceDeployment {
     instance gpioDriver
     instance i2cDriver
     instance prmDb
+    instance UartTextLogger
+    instance uartDriver
+    instance bufferManager
 
     # ----------------------------------------------------------------------
     # Pattern graph specifiers
@@ -68,31 +69,11 @@ module ReferenceDeployment {
       rateGroupDriver.CycleOut[Ports_RateGroups.rateGroup1] -> rateGroup1.CycleIn
       rateGroup1.RateGroupMemberOut[0] -> tlmSend.Run
       rateGroup1.RateGroupMemberOut[1] -> comDriver.schedIn
-      rateGroup1.RateGroupMemberOut[2] -> ComFprime.comQueue.run
+      rateGroup1.RateGroupMemberOut[3] -> UartTextLogger.run
     }
     
     connections FaultHandler {
       eventManager.FatalAnnounce -> fatalHandler.FatalReceive
-    }
-
-    connections Communications {
-      # ComDriver buffer allocations
-      comDriver.allocate   -> ComFprime.Subtopology.commsBufferGetCallee
-      comDriver.deallocate -> ComFprime.Subtopology.commsBufferSendIn
-
-      # ComDriver <-> ComStub
-      comDriver.$recv                           -> ComFprime.Subtopology.drvReceiveIn
-      ComFprime.Subtopology.drvReceiveReturnOut -> comDriver.recvReturnIn
-      ComFprime.Subtopology.drvSendOut          -> comDriver.$send
-      comDriver.ready                           -> ComFprime.Subtopology.drvConnected
-
-      # Events and telemetry to ComQueue
-      eventManager.PktSend -> ComFprime.Subtopology.comPacketQueueIn[ComFprime.Ports_ComPacketQueue.EVENTS]
-      tlmSend.PktSend     -> ComFprime.Subtopology.comPacketQueueIn[ComFprime.Ports_ComPacketQueue.TELEMETRY]
-
-      # Router <-> CmdDispatcher
-      ComFprime.Subtopology.commandOut -> cmdDisp.seqCmdBuff
-      cmdDisp.seqCmdStatus             -> ComFprime.Subtopology.cmdResponseIn
     }
 
     connections ReferenceDeployment {
@@ -105,6 +86,10 @@ module ReferenceDeployment {
       rateGroup2.RateGroupMemberOut[1] -> led.run
       # led's gpioSet output is connected to gpioDriver's gpioWrite input
       led.gpioSet -> gpioDriver.gpioWrite
+    }
+
+    connections UartConnections {
+      UartTextLogger.uartSend
     }
 
   }

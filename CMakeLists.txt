@@ -4,6 +4,7 @@
 ####
 
 cmake_minimum_required(VERSION 3.24.2)
+set(NO_GDS OFF)
 
 list(APPEND BOARD_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/lib/fprime-stm32h7-zephyr")
 find_package(Zephyr HINTS "${CMAKE_CURRENT_LIST_DIR}/lib/zephyr-workspace")

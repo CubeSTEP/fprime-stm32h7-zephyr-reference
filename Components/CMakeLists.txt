@@ -3,3 +3,4 @@
 # add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/MyComponent")
 add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/Led/")
 add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/DspLCD/")
+add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/TextLogger/")

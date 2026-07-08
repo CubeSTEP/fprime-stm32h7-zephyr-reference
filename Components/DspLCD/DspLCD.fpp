@@ -1,4 +1,4 @@
-module ReferenceDeployment {
+module Components {
     @ Display Controller STM32H753-EVAL
     active component DspLCD {
 
@@ -19,9 +19,6 @@ module ReferenceDeployment {
         @ Port for I2C bus communication
         output port busWrite: Drv.I2c
 
-        @ Scheduling port for reading from DSP LCD Connector and writing to telemetry
-        sync input port run: Svc.Sched
-
         @ Telemetry channel for DSP LCD data
         telemetry Reading: U32
         
@@ -33,6 +30,11 @@ module ReferenceDeployment {
             address: U32,
             status: Drv.I2cStatus
         ) severity warning high format "I2C error on address {} with status {}" throttle 5
+
+        event I2cReadResponse(
+            address: U32,
+            response: U32
+        ) severity activity high format "I2C read from address {} returned {}"
 
         ###############################################################################
         # Standard AC Ports: Required for Channels, Events, Commands, and Parameters  #

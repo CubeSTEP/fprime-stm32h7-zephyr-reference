@@ -10,13 +10,29 @@
 #
 ####
 
-register_fprime_module(
-    AUTOCODER_INPUTS
-        "${CMAKE_CURRENT_LIST_DIR}/instances.fpp"
-        "${CMAKE_CURRENT_LIST_DIR}/topology.fpp"
-    SOURCES
-        "${CMAKE_CURRENT_LIST_DIR}/ReferenceDeploymentTopology.cpp"
-    DEPENDS
-        Fw_Logger
-        Svc_Subtopologies_ComFprime
-)
+if (NO_GDS)
+    register_fprime_module(
+        AUTOCODER_INPUTS
+            "${CMAKE_CURRENT_LIST_DIR}/instances.fpp"
+            "${CMAKE_CURRENT_LIST_DIR}/topology-logger.fpp"
+        SOURCES
+            "${CMAKE_CURRENT_LIST_DIR}/ReferenceDeploymentTopology.cpp"
+        DEPENDS
+            Components_Led
+            Components_TextLogger
+            Fw_Logger
+    )
+else ()
+    register_fprime_module(
+        AUTOCODER_INPUTS
+            "${CMAKE_CURRENT_LIST_DIR}/instances.fpp"
+            "${CMAKE_CURRENT_LIST_DIR}/topology.fpp"
+        SOURCES
+            "${CMAKE_CURRENT_LIST_DIR}/ReferenceDeploymentTopology.cpp"
+        DEPENDS
+            Components_DspLCD
+            Components_Led
+            Components_TextLogger
+            Fw_Logger
+    )
+endif()

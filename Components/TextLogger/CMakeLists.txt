@@ -16,21 +16,20 @@
 
 register_fprime_library(
     AUTOCODER_INPUTS
-        "${CMAKE_CURRENT_LIST_DIR}/DspLCD.fpp"
+        "${CMAKE_CURRENT_LIST_DIR}/TextLogger.fpp"
     SOURCES
-        "${CMAKE_CURRENT_LIST_DIR}/DspLCD.cpp"
-    DEPENDS
-        Drv_Ports
-        Svc_Sched
+        "${CMAKE_CURRENT_LIST_DIR}/TextLogger.cpp"
+#   DEPENDS
+#       MyPackage_MyOtherModule
 )
 
 ### Unit Tests ###
 # register_fprime_ut(
 #     AUTOCODER_INPUTS
-#         "${CMAKE_CURRENT_LIST_DIR}/DspLCD.fpp"
+#         "${CMAKE_CURRENT_LIST_DIR}/TextLogger.fpp"
 #     SOURCES
-#         "${CMAKE_CURRENT_LIST_DIR}/test/ut/DspLCDTestMain.cpp"
-#         "${CMAKE_CURRENT_LIST_DIR}/test/ut/DspLCDTester.cpp"
+#         "${CMAKE_CURRENT_LIST_DIR}/test/ut/TextLoggerTestMain.cpp"
+#         "${CMAKE_CURRENT_LIST_DIR}/test/ut/TextLoggerTester.cpp"
 #     DEPENDS
 #         STest # For rules-based testing
 #     UT_AUTO_HELPERS
