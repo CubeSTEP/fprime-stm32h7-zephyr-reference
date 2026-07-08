@@ -2,6 +2,8 @@ add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/ComFprimeConfig")
 add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/PlatformCfg")
 add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/AcConstants")
 add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/FpConstants")
+add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/FileHandlingConfig")
+
 
 register_fprime_config(
     fprime-nucleo_h723zg-zephyr-reference-config

@@ -23,7 +23,6 @@
 		green_led: led_1 {
 			status = "okay";
 		};
-
 		red_led: led_3 {
 			status = "okay";
 		};
@@ -90,6 +89,10 @@
 &rcc {
 	clocks = <&pll>;
 	clock-frequency = <DT_FREQ_M(400)>;
+};
+
+&pwr {
+	power-supply = "ldo";
 };
 
 &usart1 {

@@ -4,7 +4,7 @@ base = zephyr
 [manifest]
 path = zephyr
 group-filter = -hal,-debug
-project-filter = -.*,+hal_stm32,+cmsis,+cmsis_6
+project-filter = -.*,+hal_stm32,+cmsis,+cmsis_6,+littlefs
 
 
 file = west.yml
