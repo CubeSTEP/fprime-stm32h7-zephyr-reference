@@ -96,7 +96,6 @@ module ReferenceDeployment {
     }
 
     connections ReferenceDeployment {
-      DspLCD.busWrite -> i2cDriver.write
       DspLCD.busWriteRead -> i2cDriver.writeRead
     }
 

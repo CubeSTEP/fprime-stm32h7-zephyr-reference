@@ -31,7 +31,7 @@ class DspLCD final : public DspLCDComponentBase {
 
     //! Handler implementation for command LCDI2CTransmit
     //!
-    //! Send the fixed TS3510 I2C probe when requested
+    //! Send the EXC7200 touch-controller I2C probe when requested
     void LCDI2CTransmit_cmdHandler(FwOpcodeType opCode,  //!< The opcode
                                    U32 cmdSeq,           //!< The command sequence number
                                    Fw::On transmit       //!< Whether to transmit the I2C probe

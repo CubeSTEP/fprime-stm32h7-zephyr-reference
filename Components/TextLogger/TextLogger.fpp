@@ -48,6 +48,8 @@ module Components {
 
         guarded input port uartRecv: Drv.ByteStreamData
 
-        output port uartRecvReturn: Fw.Buff
+        output port uartRecvReturn: Fw.BufferSend
+        
+        guarded input port uartSendReturn: Drv.ByteStreamData
     }
 }

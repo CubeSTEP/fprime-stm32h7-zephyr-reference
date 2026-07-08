@@ -6,7 +6,7 @@ module Components {
         # This should be overridden by the developers with a useful command/port
         @ TODO
         async command LCDI2CTransmit (
-            transmit: Fw.On @< Send the fixed TS3510 I2C probe when ON; skip when OFF
+            transmit: Fw.On @< Send the EXC7200 touch-controller I2C probe when ON; skip when OFF
         ) opcode 0
         
         ##############################################################################
@@ -15,9 +15,6 @@ module Components {
 
         @ Port for I2C bus communication
         output port busWriteRead: Drv.I2cWriteRead
-        
-        @ Port for I2C bus communication
-        output port busWrite: Drv.I2c
 
         @ Telemetry channel for DSP LCD data
         telemetry Reading: U32
@@ -34,7 +31,7 @@ module Components {
         event I2cReadResponse(
             address: U32,
             response: U32
-        ) severity activity high format "I2C read from address {} returned {}"
+        ) severity activity high format "EXC7200 I2C probe read from address {} returned {}"
 
         event I2cTransmitSkipped() \
             severity activity high \

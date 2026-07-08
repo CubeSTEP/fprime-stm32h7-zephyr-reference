@@ -89,9 +89,15 @@ module ReferenceDeployment {
     }
 
     connections UartConnections {
-      UartTextLogger.uartSend
+      UartTextLogger.uartSend     -> UartDriver.$send
+      UartDriver.$recv            -> UartTextDriver.uartRecv
+
+      UartTextLogger.uartRecvReturn ->  UartDriver.recvReturnIn
+      UartDriver.ready              ->  TextLoggerUart.uartReady
+
+      UartTextLogger.allocate     -> bufferManager.bufferGetCallee
+      UartTextLogger.deallocated  -> bufferManager.bufferSendIn
+      
     }
-
   }
-
 }
