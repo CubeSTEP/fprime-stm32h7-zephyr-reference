@@ -16,22 +16,20 @@
 
 register_fprime_library(
     AUTOCODER_INPUTS
-        "${CMAKE_CURRENT_LIST_DIR}/TextLogger.fpp"
+        "${CMAKE_CURRENT_LIST_DIR}/Potentiometer.fpp"
     SOURCES
-        "${CMAKE_CURRENT_LIST_DIR}/TextLogger.cpp"
-    DEPENDS
-        Drv_Ports
-        Svc_Sched
-        fprime-zephyr_Drv_ZephyrUartDriver
+        "${CMAKE_CURRENT_LIST_DIR}/Potentiometer.cpp"
+#   DEPENDS
+#       MyPackage_MyOtherModule
 )
 
 ### Unit Tests ###
 # register_fprime_ut(
 #     AUTOCODER_INPUTS
-#         "${CMAKE_CURRENT_LIST_DIR}/TextLogger.fpp"
+#         "${CMAKE_CURRENT_LIST_DIR}/Potentiometer.fpp"
 #     SOURCES
-#         "${CMAKE_CURRENT_LIST_DIR}/test/ut/TextLoggerTestMain.cpp"
-#         "${CMAKE_CURRENT_LIST_DIR}/test/ut/TextLoggerTester.cpp"
+#         "${CMAKE_CURRENT_LIST_DIR}/test/ut/PotentiometerTestMain.cpp"
+#         "${CMAKE_CURRENT_LIST_DIR}/test/ut/PotentiometerTester.cpp"
 #     DEPENDS
 #         STest # For rules-based testing
 #     UT_AUTO_HELPERS

@@ -13,7 +13,7 @@
 if (NO_GDS)
     register_fprime_module(
         AUTOCODER_INPUTS
-            "${CMAKE_CURRENT_LIST_DIR}/instances.fpp"
+            "${CMAKE_CURRENT_LIST_DIR}/instances-logger.fpp"
             "${CMAKE_CURRENT_LIST_DIR}/topology-logger.fpp"
         SOURCES
             "${CMAKE_CURRENT_LIST_DIR}/ReferenceDeploymentTopology.cpp"
@@ -21,6 +21,7 @@ if (NO_GDS)
             Components_Led
             Components_TextLogger
             Fw_Logger
+            fprime-zephyr_Drv_ZephyrUartDriver
     )
 else ()
     register_fprime_module(

@@ -104,14 +104,10 @@ module Default {
     instance frameAccumulator: Svc.FrameAccumulator base id 0x4C00
 
     instance fprimeRouter: Svc.FprimeRouter base id 0x4D00
-
-    instance comDriver: Zephyr.ZephyrUartDriver base id 0x4000
     
     instance gpioDriver: Zephyr.ZephyrGpioDriver base id 0x4E00
 
     instance i2cDriver: Zephyr.ZephyrI2cDriver base id 0x4F00
 
     instance uartDriver: Drv.ZephyrUartDriver base id 0x10015000
-
-    instance bufferManager: Svc.BufferManager base id 0x10017000
 }

@@ -95,9 +95,11 @@ module ReferenceDeployment {
       UartTextLogger.uartRecvReturn ->  UartDriver.recvReturnIn
       UartDriver.ready              ->  TextLoggerUart.uartReady
 
+      UartDriver.allocate     -> bufferManager.bufferGetCallee
+      UartDriver.deallocate  -> bufferManager.bufferSendIn
+
       UartTextLogger.allocate     -> bufferManager.bufferGetCallee
-      UartTextLogger.deallocated  -> bufferManager.bufferSendIn
-      
+      UartTextLogger.deallocate  -> bufferManager.bufferSendIn
     }
   }
 }

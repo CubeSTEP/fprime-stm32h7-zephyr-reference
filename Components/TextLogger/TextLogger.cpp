@@ -5,7 +5,6 @@
 // ======================================================================
 
 #include "Components/TextLogger/TextLogger.hpp"
-#include "Fw/Logger/Logger.hpp"
 
 namespace Components {
 
@@ -22,11 +21,8 @@ TextLogger ::~TextLogger() {}
 // ----------------------------------------------------------------------
 
 void TextLogger ::run_handler(FwIndexType portNum, U32 context) {
-    // TODO
-    while (true) {
-        Fw::Logger::log("Hello serial monitor");
-    }
-}
+    // if (!this->isConnected_uartSend_OutputPort(0) || !this->isConnected_allocate_OutputPort(0))
+};
 
 // ----------------------------------------------------------------------
 // Handler implementations for commands
