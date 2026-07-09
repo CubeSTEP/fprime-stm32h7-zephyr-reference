@@ -5,7 +5,9 @@
 
 cmake_minimum_required(VERSION 3.24.2)
 
-list(APPEND BOARD_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/lib/fprime-stm32h7-zephyr")
+# Let fprime-stm32h7-zephyr expose its boards through zephyr/module.yml.
+list(APPEND EXTRA_ZEPHYR_MODULES "${CMAKE_CURRENT_SOURCE_DIR}/lib/fprime-stm32h7-zephyr")
+list(REMOVE_DUPLICATES EXTRA_ZEPHYR_MODULES)
 find_package(Zephyr HINTS "${CMAKE_CURRENT_LIST_DIR}/lib/zephyr-workspace")
 project(fprime-nucleo_h723zg-zephyr-reference C CXX)
 
@@ -45,6 +47,7 @@ if(CONFIG_CODE_DATA_RELOCATION)
         FILES
             "${CMAKE_CURRENT_BINARY_DIR}/ReferenceDeployment/Top/ReferenceDeploymentTopologyAc.cpp"
             "${CMAKE_CURRENT_LIST_DIR}/ReferenceDeployment/Top/ReferenceDeploymentTopology.cpp"
+        FILTER "^(?!.*tlmSend).*" #Filter out tlmSend due to large size (C)
         LOCATION DTCM_DATA_BSS
         NOKEEP
     )
