@@ -66,15 +66,7 @@ module Components {
         ###############################################################################
         #                                UART events                                  #
         ###############################################################################
-        event portError(
-            message: string size 20
-        ) severity warning high format "{}"
-
-        event uartBufferError(
-            message: string size 20
-        ) severity warning high format "{}"
-
-        event uartSendError(
+        event errorMessage(
             message: string size 20
         ) severity warning high format "{}"
     }

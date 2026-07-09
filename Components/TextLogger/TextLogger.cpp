@@ -24,33 +24,46 @@ void TextLogger ::run_handler(FwIndexType portNum, U32 context) {
     // TODO
     const char* stringLog = "Hello serial monitor\n";
     const FwSizeType bufferSize = static_cast<FwSizeType>(std::strlen(stringLog));
+    Fw::LogStringArg portErrorMsg("Port confg error");
+    Fw::LogStringArg bufferErrorMsg("Buffer error");
+    Fw::LogStringArg uartSendErrorMsg("Uart send error");
+
+    // Verifying port connections
     if (!this->isConnected_uartSend_OutputPort(0) || !this->isConnected_allocate_OutputPort(0) || !this->isConnected_deallocate_OutputPort(0)) {
-        // Add log event if something breaks
-        this->log_wa
+        this->log_WARNING_HI_errorMessage(portErrorMsg);
         return;
     }
+
+    // Allocating for uart buffer
     Fw::Buffer uartBuffer = this->allocate_out(0, bufferSize);
+
+    // Verifying uart buffer data
     if (uartBuffer.getData() == nullptr || uartBuffer.getSize() < bufferSize) {
         if (uartBuffer.getData() != nullptr && this->isConnected_deallocate_OutputPort(0)) {
             this->deallocate_out(0, uartBuffer);
         }
-        // Add log events indicating breaking
+        this->log_WARNING_HI_errorMessage(bufferErrorMsg);
         return;
     }
 
-    // Filling buffer and setting buffer size
+    // Populating buffer with string log
     std::memcpy(uartBuffer.getData(), stringLog, bufferSize);
     uartBuffer.setSize(bufferSize);
 
+    // Send string to uart driver
     Drv::ByteStreamStatus status = this->uartSend_out(0, uartBuffer);
+
+    // Log error if the data to the uart driver is invalid
     if (status.e != Drv::ByteStreamStatus::OP_OK) {
         // enter log stating something is wrong
+        this->log_WARNING_HI_errorMessage(uartSendErrorMsg);
         if (this->isConnected_deallocate_OutputPort(0)) {
             this->deallocate_out(0, uartBuffer);
         }
         return;
     }
 
+    // Deallocate uart buffer
     if (this->isConnected_deallocate_OutputPort(0)) {
         this->deallocate_out(0, uartBuffer);
     }

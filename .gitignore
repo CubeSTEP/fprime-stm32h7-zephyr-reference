@@ -20,7 +20,7 @@ ReferenceDeployment_Old
 .DS_Store
 *.gcov
 .cache
-Components/TextLogger/unused/
+/build/
 
 # Ignore local CMake build
 cmake-3.27.9*
