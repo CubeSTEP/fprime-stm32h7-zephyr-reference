@@ -13,12 +13,19 @@
 // Used for logging to the console
 #include <Fw/Logger/Logger.hpp>
 #include <Fw/Types/Assert.hpp>
+#include <zephyr/device.h>
+#include <zephyr/drivers/adc.h>
 
 #define FPRIME_UART_NODE DT_CHOSEN(zephyr_console)
 const struct device *uart_device = DEVICE_DT_GET(FPRIME_UART_NODE);
 
 #define FPRIME_I2C_NODE DT_NODELABEL(i2c1)
 const struct device *i2c_device = DEVICE_DT_GET(FPRIME_I2C_NODE); 
+
+#define FPRIME_ADC_NODE DT_PATH(zephyr_user)
+static const struct adc_dt_spec adc_configuration_storage =
+    ADC_DT_SPEC_GET_BY_NAME(FPRIME_ADC_NODE, potentiometer);
+const struct adc_dt_spec* adc_configuration = &adc_configuration_storage;
 
 /**
  * \brief execute the program
@@ -40,6 +47,7 @@ int main(int argc, char* argv[]) {
     inputs.uartDevice = uart_device;
     inputs.uartBaud = baud_rate;
     inputs.i2cDevice = i2c_device;
+    inputs.adcDeviceSpec = adc_configuration;
     Fw::Logger::log("[F Prime] Initializing topology\n");
     ReferenceDeployment::setupTopology(inputs);
     Fw::Logger::log("[F Prime] Entering main loop\n");

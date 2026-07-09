@@ -6,6 +6,8 @@ module ReferenceDeployment {
 
     enum Ports_RateGroups {
       rateGroup1
+      rateGroup2
+      rateGroup3
     }
 
   topology ReferenceDeployment {
@@ -34,11 +36,14 @@ module ReferenceDeployment {
     instance textLogger
     instance tlmSend
     instance systemResources
-    instance led
-    instance DspLCD
+
     instance gpioDriver
     instance i2cDriver
     instance prmDb
+
+    instance led
+    instance DspLCD
+    instance potentiometer
 
     # ----------------------------------------------------------------------
     # Pattern graph specifiers
@@ -69,6 +74,12 @@ module ReferenceDeployment {
       rateGroup1.RateGroupMemberOut[0] -> tlmSend.Run
       rateGroup1.RateGroupMemberOut[1] -> comDriver.schedIn
       rateGroup1.RateGroupMemberOut[2] -> ComFprime.comQueue.run
+
+      # Rate group 2
+      rateGroupDriver.CycleOut[Ports_RateGroups.rateGroup2] -> rateGroup2.CycleIn
+
+      # Rate group 3
+      rateGroupDriver.CycleOut[Ports_RateGroups.rateGroup3] -> rateGroup3.CycleIn
     }
     
     connections FaultHandler {
@@ -96,6 +107,10 @@ module ReferenceDeployment {
     }
 
     connections ReferenceDeployment {
+      
+    }
+
+    connections DspConnections{
       DspLCD.busWriteRead -> i2cDriver.writeRead
     }
 
@@ -104,6 +119,11 @@ module ReferenceDeployment {
       rateGroup2.RateGroupMemberOut[1] -> led.run
       # led's gpioSet output is connected to gpioDriver's gpioWrite input
       led.gpioSet -> gpioDriver.gpioWrite
+    }
+
+    connections PotentiometerConnections {
+      # Rate Group 3 output is connected to potentiometer's run input
+      rateGroup3.RateGroupMemberOut[1] -> potentiometer.run
     }
 
   }

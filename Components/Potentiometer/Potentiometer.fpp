@@ -1,34 +1,28 @@
 module Components {
-    @ Controll for Potentiometer on STM32H753-EVAL
+    @ Control for Potentiometer on STM32H753-EVAL
     active component Potentiometer {
 
-        # One async command/port is required for active components
-        # This should be overridden by the developers with a useful command/port
-        @ TODO
-        async command TODO opcode 0
-
-        ##############################################################################
-        #### Uncomment the following examples to start customizing your component ####
-        ##############################################################################
-
-        # @ Example async command
-        # async command COMMAND_NAME(param_name: U32)
+        async command READ_Potentiometer(
+            onOff: Fw.On @< Indicates whether the potentiometer is on or off
+        )
 
         # @ Example telemetry counter
-        # telemetry ExampleCounter: U64
-
+        telemetry Mv_Value: U32
+        telemetry Raw_Value: U16
+        
         # @ Example event
         # event ExampleStateEvent(example_state: Fw.On) severity activity high id 0 format "State set to {}"
-
+        event portSetPotentiometerState($state: Fw.On) \
+            severity activity high \
+            format "Read potentiometer state set to: {}"
+        
         # @ Example port: receiving calls from the rate group
-        # sync input port run: Svc.Sched
-
-        # @ Example parameter
-        # param PARAMETER_NAME: U32
+        sync input port run: Svc.Sched
 
         ###############################################################################
         # Standard AC Ports: Required for Channels, Events, Commands, and Parameters  #
         ###############################################################################
+
         @ Port for requesting the current time
         time get port timeCaller
 

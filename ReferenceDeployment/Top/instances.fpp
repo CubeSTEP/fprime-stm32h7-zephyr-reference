@@ -65,7 +65,13 @@ module ReferenceDeployment {
   instance DspLCD: Components.DspLCD base id 0x0F00 \
     queue size Default.QUEUE_SIZE \
     stack size Default.STACK_SIZE \
-    priority 3
+    priority 4
+
+  instance potentiometer: Components.Potentiometer base id 0x1000 \
+    queue size Default.QUEUE_SIZE \
+    stack size Default.STACK_SIZE \
+    priority 4
+
   # ----------------------------------------------------------------------
   # Queued component instances
   # ----------------------------------------------------------------------

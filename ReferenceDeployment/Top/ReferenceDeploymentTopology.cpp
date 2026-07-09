@@ -37,6 +37,9 @@ enum TopologyConstants {
     COMM_PRIORITY = 34,
 };
 
+// Constants for ADC Potentiometer Configuration
+U16 potentiometerBuffer[1] = {0};
+
 /**
  * \brief configure/setup components in project-specific way
  *
@@ -99,6 +102,7 @@ void setupTopology(const TopologyState& state) {
     uartDriver.configure(state.uartDevice, state.uartBaud);
 #endif
     i2cDriver.open(state.i2cDevice);
+    potentiometer.configure(state.adcDeviceSpec, potentiometerBuffer, sizeof(potentiometerBuffer));
     // Start rate groups
     rateDriver.start();
 
