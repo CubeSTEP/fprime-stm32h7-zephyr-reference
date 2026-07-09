@@ -22,7 +22,6 @@ module ReferenceDeployment {
     instance rateDriver
     instance chronoTime
     instance cmdDisp
-    instance comDriver
     instance eventManager
     instance fatalHandler
     instance rateGroup1
@@ -33,13 +32,13 @@ module ReferenceDeployment {
     instance tlmSend
     instance systemResources
     instance led
-    instance DspLCD
     instance gpioDriver
-    instance i2cDriver
     instance prmDb
     instance UartTextLogger
     instance uartDriver
     instance bufferManager
+    instance DspLCD
+    instance i2cDriver
 
     # ----------------------------------------------------------------------
     # Pattern graph specifiers
@@ -68,8 +67,8 @@ module ReferenceDeployment {
       # Rate group 1
       rateGroupDriver.CycleOut[Ports_RateGroups.rateGroup1] -> rateGroup1.CycleIn
       rateGroup1.RateGroupMemberOut[0] -> tlmSend.Run
-      rateGroup1.RateGroupMemberOut[1] -> comDriver.schedIn
-      rateGroup1.RateGroupMemberOut[3] -> UartTextLogger.run
+      rateGroup1.RateGroupMemberOut[1] -> UartTextLogger.run
+      rateGroup1.RateGroupMemberOut[2] -> uartDriver.schedIn
     }
     
     connections FaultHandler {
@@ -77,7 +76,6 @@ module ReferenceDeployment {
     }
 
     connections ReferenceDeployment {
-      DspLCD.busWrite -> i2cDriver.write
       DspLCD.busWriteRead -> i2cDriver.writeRead
     }
 
@@ -89,14 +87,14 @@ module ReferenceDeployment {
     }
 
     connections UartConnections {
-      UartTextLogger.uartSend     -> UartDriver.$send
-      UartDriver.$recv            -> UartTextDriver.uartRecv
+      UartTextLogger.uartSend     -> uartDriver.$send
+      uartDriver.$recv            -> UartTextLogger.uartRecv
 
-      UartTextLogger.uartRecvReturn ->  UartDriver.recvReturnIn
-      UartDriver.ready              ->  TextLoggerUart.uartReady
+      UartTextLogger.uartRecvReturn ->  uartDriver.recvReturnIn
+      uartDriver.ready              ->  UartTextLogger.uartReady
 
-      UartDriver.allocate     -> bufferManager.bufferGetCallee
-      UartDriver.deallocate  -> bufferManager.bufferSendIn
+      uartDriver.allocate     -> bufferManager.bufferGetCallee
+      uartDriver.deallocate  -> bufferManager.bufferSendIn
 
       UartTextLogger.allocate     -> bufferManager.bufferGetCallee
       UartTextLogger.deallocate  -> bufferManager.bufferSendIn

@@ -44,12 +44,38 @@ module Components {
         ###############################################################################
         #                                UART ports                                   #
         ###############################################################################
+        @ Sends buffer to the uart driver
         output port uartSend: Drv.ByteStreamSend
 
+        @ Receives buffer from uart driver
         guarded input port uartRecv: Drv.ByteStreamData
 
+        @ Receives signal that the uart driver is ready
+        async input port uartReady: Drv.ByteStreamReady
+
+        @ Sends buffer back to the driver after its done being used
         output port uartRecvReturn: Fw.BufferSend
         
-        guarded input port uartSendReturn: Drv.ByteStreamData
+        @ Sends request to allocate buffer
+        output port allocate: Fw.BufferGet
+
+        @ Sends request to deallocate buffer
+        output port deallocate: Fw.BufferSend
+
+
+        ###############################################################################
+        #                                UART events                                  #
+        ###############################################################################
+        event portError(
+            message: string size 20
+        ) severity warning high format "{}"
+
+        event uartBufferError(
+            message: string size 20
+        ) severity warning high format "{}"
+
+        event uartSendError(
+            message: string size 20
+        ) severity warning high format "{}"
     }
 }

@@ -62,15 +62,14 @@ module Default {
         stack size Default.STACK_SIZE \
         priority 4
 
-    instance DspLCD: Components.DspLCD base id 0x0F00 \
-        queue size Default.QUEUE_SIZE \
-        stack size Default.STACK_SIZE \
-        priority 3
-
     instance UartTextLogger: Components.TextLogger base id 0x1500 \
         queue size 20 \
         stack size Default.STACK_SIZE \
         priority 9
+    instance DspLCD: Components.DspLCD base id 0x0F00 \
+        queue size Default.QUEUE_SIZE \
+        stack size Default.STACK_SIZE \
+        priority 3
     # ----------------------------------------------------------------------
     # Queued component instances
     # ----------------------------------------------------------------------
@@ -107,7 +106,7 @@ module Default {
     
     instance gpioDriver: Zephyr.ZephyrGpioDriver base id 0x4E00
 
-    instance i2cDriver: Zephyr.ZephyrI2cDriver base id 0x4F00
+    instance uartDriver: Zephyr.ZephyrUartDriver base id 0x10015000
 
-    instance uartDriver: Drv.ZephyrUartDriver base id 0x10015000
+    instance i2cDriver: Zephyr.ZephyrI2cDriver base id 0x4F00
 }

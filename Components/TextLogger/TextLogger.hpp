@@ -1,6 +1,6 @@
 // ======================================================================
 // \title  TextLogger.hpp
-// \author thakkar
+// \author howardl
 // \brief  hpp file for TextLogger component implementation class
 // ======================================================================
 
@@ -33,6 +33,19 @@ class TextLogger final : public TextLoggerComponentBase {
     void run_handler(FwIndexType portNum,  //!< The port number
                      U32 context           //!< The call order
                      ) override;
+
+    //! Handler implementation for uartReady
+    //!
+    //! Receives signal that the uart driver is ready
+    void uartReady_handler(FwIndexType portNum  //!< The port number
+                           ) override;
+
+    //! Handler implementation for uartRecv
+    //!
+    //! Receives buffer from uart driver
+    void uartRecv_handler(FwIndexType portNum,  //!< The port number
+                          Fw::Buffer& buffer,
+                          const Drv::ByteStreamStatus& status) override;
 
   private:
     // ----------------------------------------------------------------------

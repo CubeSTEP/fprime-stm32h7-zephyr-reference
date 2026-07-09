@@ -81,7 +81,23 @@ void setupTopology(const TopologyState& state) {
     // Autocoded task kick-off (active components). Function provided by autocoder.
     startTasks(state);
     // Uplink is configured for receive so a socket task is started
+#ifndef NO_GDS
     comDriver.configure(state.uartDevice, state.uartBaud);
+#else
+    static Svc::BufferManager::BufferBins bins;
+    memset(&bins, 0, sizeof(bins));
+    bins.bins[0].bufferSize = ComFprimeConfig::BuffMgr::commsBuffSize;
+    bins.bins[0].numBuffers = ComFprimeConfig::BuffMgr::commsBuffCount;
+
+    bufferManager.setup(
+        ComFprimeConfig::BuffMgr::commsBuffMgrId,
+        0,
+        ComFprime::Allocation::memAllocator,
+        bins
+    );
+
+    uartDriver.configure(state.uartDevice, state.uartBaud);
+#endif
     i2cDriver.open(state.i2cDevice);
     // Start rate groups
     rateDriver.start();

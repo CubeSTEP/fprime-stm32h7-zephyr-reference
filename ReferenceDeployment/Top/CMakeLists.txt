@@ -21,7 +21,7 @@ if (NO_GDS)
             Components_Led
             Components_TextLogger
             Fw_Logger
-            fprime-zephyr_Drv_ZephyrUartDriver
+            Svc_Subtopologies_ComFprime
     )
 else ()
     register_fprime_module(
