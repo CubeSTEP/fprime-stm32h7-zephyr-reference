@@ -6,6 +6,8 @@ module ReferenceDeployment {
 
     enum Ports_RateGroups {
       rateGroup1
+      rateGroup2
+      rateGroup3
     }
 
   topology ReferenceDeployment {
@@ -35,9 +37,9 @@ module ReferenceDeployment {
     instance textLogger
     instance tlmSend
     instance systemResources
-    instance led
     instance gpioDriver
     instance prmDb
+    instance led
 
     # ----------------------------------------------------------------------
     # Pattern graph specifiers
@@ -69,6 +71,12 @@ module ReferenceDeployment {
       rateGroup1.RateGroupMemberOut[1] -> comDriver.schedIn
       rateGroup1.RateGroupMemberOut[2] -> ComFprime.comQueue.run
       rateGroup1.RateGroupMemberOut[3] -> FileHandling.Subtopology.fileDownlinkRun
+
+      # Rate group 2
+      rateGroupDriver.CycleOut[Ports_RateGroups.rateGroup2] -> rateGroup2.CycleIn
+
+      # Rate group 3
+      rateGroupDriver.CycleOut[Ports_RateGroups.rateGroup3] -> rateGroup3.CycleIn
     }
     
     connections FaultHandler {
@@ -102,6 +110,7 @@ module ReferenceDeployment {
     }
 
     connections ReferenceDeployment {
+      
     }
 
     connections LedConnections {

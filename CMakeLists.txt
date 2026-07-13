@@ -4,6 +4,20 @@
 ####
 
 cmake_minimum_required(VERSION 3.24.2)
+option(NO_GDS "fprime-gds not in use to enable text logger" OFF)
+
+if(NO_GDS)
+    add_compile_definitions(NO_GDS)
+endif()
+message("UART Text Logger: ${NO_GDS}")
+
+if (BOARD STREQUAL "stm32h753i_eval")
+    add_compile_definitions(STM32H753I_EVAL)
+    message("BOARD: stm32h753i_eval")
+elseif (BOARD STREQUAL "nucleo_h723zg")
+    add_compile_definitions(NUCLEO_H723ZG)
+    message("BOARD: nucleo_h723zg")
+endif()
 
 # Let fprime-stm32h7-zephyr expose its boards through zephyr/module.yml.
 list(APPEND EXTRA_ZEPHYR_MODULES "${CMAKE_CURRENT_SOURCE_DIR}/lib/fprime-stm32h7-zephyr")

@@ -15,6 +15,11 @@
 #include "Svc/Subtopologies/FileHandling/SubtopologyTopologyDefs.hpp"
 #include "Svc/Health/Health.hpp"
 
+struct device;
+
+#ifdef STM32H753I_EVAL
+    struct adc_dt_spec;
+#endif
 #include <zephyr/drivers/uart.h>
 // ComFprime subtopology configuration phases expect these support objects
 // to be provided by the deployment.
@@ -65,7 +70,11 @@ namespace ReferenceDeployment {
      * fields, which are derived by command line inputs.
      */
     struct TopologyState {
-        const device* uartDevice;
+        const struct device* uartDevice;
+        #ifdef STM32H753I_EVAL
+            const struct device* i2cDevice;
+            const struct adc_dt_spec* adcDeviceSpec;
+        #endif
         PlatformIntType uartBaud;
     };
 }  // namespace ReferenceDeployment

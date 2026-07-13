@@ -10,14 +10,44 @@
 #
 ####
 
-register_fprime_module(
-    AUTOCODER_INPUTS
-        "${CMAKE_CURRENT_LIST_DIR}/instances.fpp"
-        "${CMAKE_CURRENT_LIST_DIR}/topology.fpp"
-    SOURCES
-        "${CMAKE_CURRENT_LIST_DIR}/ReferenceDeploymentTopology.cpp"
-    DEPENDS
-        Fw_Logger
-        Svc_Subtopologies_ComFprime
-        Svc_Subtopologies_FileHandling
-)
+if (NO_GDS)
+    register_fprime_module(
+        AUTOCODER_INPUTS
+            "${CMAKE_CURRENT_LIST_DIR}/instances-no_gds.fpp"
+            "${CMAKE_CURRENT_LIST_DIR}/topology-no_gds.fpp"
+        SOURCES
+            "${CMAKE_CURRENT_LIST_DIR}/ReferenceDeploymentTopology.cpp"
+        DEPENDS
+            Components_Led
+            Components_TextLogger
+            Fw_Logger
+            Svc_Subtopologies_ComFprime
+            Svc_Subtopologies_FileHandling
+    )
+elseif (BOARD STREQUAL "stm32h753i_eval")
+    register_fprime_module(
+        AUTOCODER_INPUTS
+            "${CMAKE_CURRENT_LIST_DIR}/instances-stm32h753i_eval.fpp"
+            "${CMAKE_CURRENT_LIST_DIR}/topology-stm32h753i_eval.fpp"
+        SOURCES
+            "${CMAKE_CURRENT_LIST_DIR}/ReferenceDeploymentTopology.cpp"
+        DEPENDS
+            Components_DspLCD
+            Components_Led
+            Components_Potentiometer
+            Fw_Logger
+            Svc_Subtopologies_FileHandling
+    )
+elseif (BOARD STREQUAL "nucleo_h723zg")
+    register_fprime_module(
+        AUTOCODER_INPUTS
+            "${CMAKE_CURRENT_LIST_DIR}/instances-nucleo_h723zg.fpp"
+            "${CMAKE_CURRENT_LIST_DIR}/topology-nucleo_h723zg.fpp"
+        SOURCES
+            "${CMAKE_CURRENT_LIST_DIR}/ReferenceDeploymentTopology.cpp"
+         DEPENDS
+            Fw_Logger
+            Svc_Subtopologies_ComFprime
+            Svc_Subtopologies_FileHandling
+    )
+endif()
