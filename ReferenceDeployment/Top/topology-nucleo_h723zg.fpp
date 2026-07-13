@@ -6,6 +6,8 @@ module ReferenceDeployment {
 
     enum Ports_RateGroups {
       rateGroup1
+      rateGroup2
+      rateGroup3
     }
 
   topology ReferenceDeployment {
@@ -13,6 +15,8 @@ module ReferenceDeployment {
     # ----------------------------------------------------------------------
     # Subtopology instances
     # ----------------------------------------------------------------------
+
+    instance ComFprime.Subtopology
 
     # ----------------------------------------------------------------------
     # Instances used in the topology
@@ -22,6 +26,7 @@ module ReferenceDeployment {
     instance rateDriver
     instance chronoTime
     instance cmdDisp
+    instance comDriver
     instance eventManager
     instance fatalHandler
     instance rateGroup1
@@ -31,14 +36,9 @@ module ReferenceDeployment {
     instance textLogger
     instance tlmSend
     instance systemResources
-    instance led
     instance gpioDriver
     instance prmDb
-    instance UartTextLogger
-    instance uartDriver
-    instance bufferManager
-    instance DspLCD
-    instance i2cDriver
+    instance led
 
     # ----------------------------------------------------------------------
     # Pattern graph specifiers
@@ -67,16 +67,42 @@ module ReferenceDeployment {
       # Rate group 1
       rateGroupDriver.CycleOut[Ports_RateGroups.rateGroup1] -> rateGroup1.CycleIn
       rateGroup1.RateGroupMemberOut[0] -> tlmSend.Run
-      rateGroup1.RateGroupMemberOut[1] -> UartTextLogger.run
-      rateGroup1.RateGroupMemberOut[2] -> uartDriver.schedIn
+      rateGroup1.RateGroupMemberOut[1] -> comDriver.schedIn
+      rateGroup1.RateGroupMemberOut[2] -> ComFprime.comQueue.run
+
+      # Rate group 2
+      rateGroupDriver.CycleOut[Ports_RateGroups.rateGroup2] -> rateGroup2.CycleIn
+
+      # Rate group 3
+      rateGroupDriver.CycleOut[Ports_RateGroups.rateGroup3] -> rateGroup3.CycleIn
     }
     
     connections FaultHandler {
       eventManager.FatalAnnounce -> fatalHandler.FatalReceive
     }
 
+    connections Communications {
+      # ComDriver buffer allocations
+      comDriver.allocate   -> ComFprime.Subtopology.commsBufferGetCallee
+      comDriver.deallocate -> ComFprime.Subtopology.commsBufferSendIn
+
+      # ComDriver <-> ComStub
+      comDriver.$recv                           -> ComFprime.Subtopology.drvReceiveIn
+      ComFprime.Subtopology.drvReceiveReturnOut -> comDriver.recvReturnIn
+      ComFprime.Subtopology.drvSendOut          -> comDriver.$send
+      comDriver.ready                           -> ComFprime.Subtopology.drvConnected
+
+      # Events and telemetry to ComQueue
+      eventManager.PktSend -> ComFprime.Subtopology.comPacketQueueIn[ComFprime.Ports_ComPacketQueue.EVENTS]
+      tlmSend.PktSend     -> ComFprime.Subtopology.comPacketQueueIn[ComFprime.Ports_ComPacketQueue.TELEMETRY]
+
+      # Router <-> CmdDispatcher
+      ComFprime.Subtopology.commandOut -> cmdDisp.seqCmdBuff
+      cmdDisp.seqCmdStatus             -> ComFprime.Subtopology.cmdResponseIn
+    }
+
     connections ReferenceDeployment {
-      DspLCD.busWriteRead -> i2cDriver.writeRead
+      
     }
 
     connections LedConnections {
@@ -86,18 +112,6 @@ module ReferenceDeployment {
       led.gpioSet -> gpioDriver.gpioWrite
     }
 
-    connections UartConnections {
-      UartTextLogger.uartSend     -> uartDriver.$send
-      uartDriver.$recv            -> UartTextLogger.uartRecv
-
-      UartTextLogger.uartRecvReturn ->  uartDriver.recvReturnIn
-      uartDriver.ready              ->  UartTextLogger.uartReady
-
-      uartDriver.allocate     -> bufferManager.bufferGetCallee
-      uartDriver.deallocate  -> bufferManager.bufferSendIn
-
-      UartTextLogger.allocate     -> bufferManager.bufferGetCallee
-      UartTextLogger.deallocate  -> bufferManager.bufferSendIn
-    }
   }
+
 }

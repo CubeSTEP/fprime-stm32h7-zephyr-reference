@@ -37,8 +37,10 @@ enum TopologyConstants {
     COMM_PRIORITY = 34,
 };
 
-// Constants for ADC Potentiometer Configuration
-U16 potentiometerBuffer[1] = {0};
+#ifdef STM32H753I_EVAL
+    // Constants for ADC Potentiometer Configuration
+    U16 potentiometerBuffer[1] = {0};
+#endif
 
 /**
  * \brief configure/setup components in project-specific way
@@ -84,9 +86,7 @@ void setupTopology(const TopologyState& state) {
     // Autocoded task kick-off (active components). Function provided by autocoder.
     startTasks(state);
     // Uplink is configured for receive so a socket task is started
-#ifndef NO_GDS
-    comDriver.configure(state.uartDevice, state.uartBaud);
-#else
+#ifdef NO_GDS
     static Svc::BufferManager::BufferBins bins;
     memset(&bins, 0, sizeof(bins));
     bins.bins[0].bufferSize = ComFprimeConfig::BuffMgr::commsBuffSize;
@@ -100,13 +100,16 @@ void setupTopology(const TopologyState& state) {
     );
 
     uartDriver.configure(state.uartDevice, state.uartBaud);
+#else
+    comDriver.configure(state.uartDevice, state.uartBaud);
+    #ifdef STM32H753I_EVAL
+        i2cDriver.open(state.i2cDevice);
+        potentiometer.configure(state.adcDeviceSpec, potentiometerBuffer, sizeof(potentiometerBuffer));
+    #endif
 #endif
-    i2cDriver.open(state.i2cDevice);
-    potentiometer.configure(state.adcDeviceSpec, potentiometerBuffer, sizeof(potentiometerBuffer));
     // Start rate groups
     rateDriver.start();
-
-    }
+}
 
 void teardownTopology(const TopologyState& state) {
     // Autocoded (active component) task clean-up. Functions provided by topology autocoder.
