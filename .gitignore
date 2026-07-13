@@ -8,9 +8,11 @@ build-fprime-*
 *.template.hpp
 compile_commands.json
 .clangd
+
 # Zephyr workspace
 lib/zephyr-workspace/*
 ReferenceDeployment_Old
+
 
 # Misc
 /venv/

@@ -12,6 +12,7 @@
 #include "Svc/Subtopologies/ComFprime/SubtopologyTopologyDefs.hpp"
 #include "Svc/Subtopologies/ComFprime/Ports_ComBufferQueueEnumAc.hpp"
 #include "Svc/Subtopologies/ComFprime/Ports_ComPacketQueueEnumAc.hpp"
+#include "Svc/Subtopologies/FileHandling/SubtopologyTopologyDefs.hpp"
 #include "Svc/Health/Health.hpp"
 
 struct device;
@@ -19,6 +20,7 @@ struct device;
 #ifdef STM32H753I_EVAL
     struct adc_dt_spec;
 #endif
+#include <zephyr/drivers/uart.h>
 // ComFprime subtopology configuration phases expect these support objects
 // to be provided by the deployment.
 namespace ComFprime {

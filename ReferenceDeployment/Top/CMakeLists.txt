@@ -22,6 +22,7 @@ if (NO_GDS)
             Components_TextLogger
             Fw_Logger
             Svc_Subtopologies_ComFprime
+            Svc_Subtopologies_FileHandling
     )
 elseif (BOARD STREQUAL "stm32h753i_eval")
     register_fprime_module(
@@ -35,6 +36,7 @@ elseif (BOARD STREQUAL "stm32h753i_eval")
             Components_Led
             Components_Potentiometer
             Fw_Logger
+            Svc_Subtopologies_FileHandling
     )
 elseif (BOARD STREQUAL "nucleo_h723zg")
     register_fprime_module(
@@ -46,5 +48,6 @@ elseif (BOARD STREQUAL "nucleo_h723zg")
          DEPENDS
             Fw_Logger
             Svc_Subtopologies_ComFprime
+            Svc_Subtopologies_FileHandling
     )
 endif()

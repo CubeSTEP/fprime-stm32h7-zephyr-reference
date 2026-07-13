@@ -17,6 +17,7 @@ module ReferenceDeployment {
     # ----------------------------------------------------------------------
 
     instance ComFprime.Subtopology
+    instance FileHandling.Subtopology
 
     # ----------------------------------------------------------------------
     # Instances used in the topology
@@ -69,6 +70,7 @@ module ReferenceDeployment {
       rateGroup1.RateGroupMemberOut[0] -> tlmSend.Run
       rateGroup1.RateGroupMemberOut[1] -> comDriver.schedIn
       rateGroup1.RateGroupMemberOut[2] -> ComFprime.comQueue.run
+      rateGroup1.RateGroupMemberOut[3] -> FileHandling.Subtopology.fileDownlinkRun
 
       # Rate group 2
       rateGroupDriver.CycleOut[Ports_RateGroups.rateGroup2] -> rateGroup2.CycleIn
@@ -92,13 +94,19 @@ module ReferenceDeployment {
       ComFprime.Subtopology.drvSendOut          -> comDriver.$send
       comDriver.ready                           -> ComFprime.Subtopology.drvConnected
 
-      # Events and telemetry to ComQueue
+      # Event, telemetry, and file to ComQueue
       eventManager.PktSend -> ComFprime.Subtopology.comPacketQueueIn[ComFprime.Ports_ComPacketQueue.EVENTS]
       tlmSend.PktSend     -> ComFprime.Subtopology.comPacketQueueIn[ComFprime.Ports_ComPacketQueue.TELEMETRY]
+      FileHandling.Subtopology.fileDownlinkBufferSendOut  -> ComFprime.Subtopology.bufferQueueIn[ComFprime.Ports_ComBufferQueue.FILE]
+      ComFprime.Subtopology.bufferReturnOut[ComFprime.Ports_ComBufferQueue.FILE] -> FileHandling.Subtopology.fileDownlinkBufferReturn
 
       # Router <-> CmdDispatcher
       ComFprime.Subtopology.commandOut -> cmdDisp.seqCmdBuff
       cmdDisp.seqCmdStatus             -> ComFprime.Subtopology.cmdResponseIn
+
+      # FileUplink <-> FprimeRouter
+      ComFprime.Subtopology.fileUplinkOut  ->  FileHandling.Subtopology.fileUplinkBufferSendIn
+      FileHandling.Subtopology.fileUplinkBufferSendOut -> ComFprime.Subtopology.fileUplinkReturnIn
     }
 
     connections ReferenceDeployment {
