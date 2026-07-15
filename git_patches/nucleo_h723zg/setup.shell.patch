@@ -1,5 +1,5 @@
 diff --git a/setup.sh b/setup.sh
-index d0d7bcf..5a0e4f3 100644
+index d0d7bcf..0e80121 100644
 --- a/setup.sh
 +++ b/setup.sh
 @@ -4,7 +4,7 @@ set -e  # Exit on any error
@@ -17,8 +17,8 @@ index d0d7bcf..5a0e4f3 100644
  # START
 -
 +cd "$MCUBOOT_ROOT"
-+git apply --check "$PATCH_ROOT/mcuboot.patch"
-+git apply --check "$PATCH_ROOT/mcuboot1.patch"
++git apply --check "$PATCH_ROOT/$BOARD/mcuboot.patch"
++git apply --check "$PATCH_ROOT/$BOARD/mcuboot1.patch"
 +cd "$MCUBOOT_ROOT/boot/zephyr"
 +west build --no-sysbuild -b $BOARD
  # END
