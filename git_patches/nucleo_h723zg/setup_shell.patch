@@ -1,11 +1,5 @@
 diff --git a/setup.sh b/setup.sh
-<<<<<<< HEAD
-old mode 100755
-new mode 100644
-index fa2a944..731fe8e
-=======
-index cae4dfb..7fe5fa0 100755
->>>>>>> parent of 6b25198 (new setup.sh patch for nucleoh723zg)
+index fa2a944..731fe8e 100644
 --- a/setup.sh
 +++ b/setup.sh
 @@ -2,7 +2,7 @@
@@ -15,9 +9,9 @@ index cae4dfb..7fe5fa0 100755
 -BOARD="N/A"
 +BOARD="nucleo_h723zg"
  
- if [ BOARD == "N/A" ]; then
+ if [ $BOARD == "N/A" ]; then
      echo "Make sure to apply the patches in respect to your board FIRST."
-@@ -79,6 +79,8 @@ west zephyr-export
+@@ -79,6 +79,11 @@ west zephyr-export
  west sdk install
  
  # START
