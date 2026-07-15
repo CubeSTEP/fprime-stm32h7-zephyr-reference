@@ -1,35 +1,50 @@
 # fprime-zephyr-reference project
-This project is an implementation of F` on Zephyr RTOS. 
+This project is an implementation of F` on Zephyr RTOS, with MCUBoot being built additionally as a separate Zephyr application.
 
 > [!Note]
 > This deployment by default builds for the NUCLEO-H723ZG development board and has been verified on macOS and on Windows 11 using WSL (Ubuntu 22.04 LTS). 
 > 
 
-## System Requirements
-- F Prime System Requirements listed [here](https://fprime.jpl.nasa.gov/latest/docs/getting-started/installing-fprime/#system-requirements)
-- Zephyr dependencies listed [here](https://docs.zephyrproject.org/latest/develop/getting_started/index.html#install-dependencies)
-- Minimum required **CMake version: 3.27.0**
+# Dependencies
+- git
+- python3 & venv (Tested with python3.13)
+- Computer
+- Internet connection
 
-## Prerequisites
-1. Follow the [Hello World Tutorial](https://fprime.jpl.nasa.gov/latest/tutorials-hello-world/docs/hello-world/)
-2. Follow the [Zephyr Getting Started Guide](https://docs.zephyrproject.org/latest/develop/getting_started/index.html). Ensure that the Zephyr's dependencies and SDK have been installed
-3. If you are using WSL, make sure to refer to the [WSL Notes][wsl-notes] docs
 
-## Table of Contents
-1. [Initial Project Setup][initial-setup]
-2. [Building, Flashing, and Running the Deployment][build-flash-run]
+# Setup
+> [!Note]
+> This reference requires a couple steps of manual setup before it's able to be fully automated by ```bash setup.sh```. 
+>
 
-## Additional Resources
-- [Using a Custom Board Configuration][custom-board]
-- [Tested Board List][board-list]
-- [Troubleshooting][troubleshooting]
-- [WSL Notes][wsl-notes]
+- Apply the git patch present in ```bash $PROJECT_ROOT\BOARD_NAME\setup_shell.patch ```
+- Run setup.sh 
+- Apply the rest of the git patch(es) present in ```bash $PROJECT_ROOT\BOARD_NAME\mcuboot_patches```
+- Run setup.sh
 
-<!-- Links -->
-[initial-setup]: ./docs/main-content/initial-setup.md
-[board-dependencies]: ./docs/main-content/board-dependencies.md
-[build-flash-run]: ./docs/main-content/build-flash-run.md
-[custom-board]: ./docs/additional-resources/specifying-board-configuration.md
-[board-list]: ./docs/additional-resources/board-list.md
-[troubleshooting]: ./docs/additional-resources/troubleshooting.md
-[wsl-notes]: ./docs/additional-resources/wsl-notes.md
+Setup Complete
+
+# Usage
+> [!Note]
+> If possible, use .hex files ONLY. It makes the flashing order of both the MCUBoot application and fprime-zephyr application agonistic. Otherwise, you must manually offset the flashing of the fprime-zephyr application as to not overwrite the MCUBoot application, for which you will flash first.
+>
+The MCUBoot application, after being compiled, is built in ```bash $PROJECT_ROOT\lib\zephyr-workspace\bootloader\mcuboot\boot\zephyr\build\zephyr```
+- ```bash zephyr.hex``` is what you're looking for. This ```bash .hex``` file is what contains the MCUBoot bootloader
+The fprime-zephyr application, after being compiled, is built in ```bash $PROJECT_ROOT\build-fprime-automatic-zephyr\zephyr```
+- ```bash zephyr.signed.hex``` is what you're looking for, if your intention is to use the fprime-zephyr application with MCUBoot. Otherwise, ```bash zephyr.hex``` is what you're looking for. ```bash zephyr.hex``` will NOT work on an MCU with MCUBoot loaded on it.
+
+# Flashing
+> [!Note]
+> This reference has only been tested on a STMicrocontroller Nucleo board. Flashing steps may differ for other MCUs.
+>
+
+- Open up STM32CubeProgrammer and navigate to "Erasing & Programming". Fully erase the MCU if this is the first time flashing.
+- ENSURE "Skip flash erase before programming" IS CHECKED. Or not. Just ensure your partitions are a factor of 128KiB (in your board's .dtsi). 
+- Flash both .hex files in any order you'd like.
+
+Success!
+
+
+
+
+
