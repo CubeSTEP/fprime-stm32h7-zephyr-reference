@@ -2,6 +2,7 @@
 
 set -e  # Exit on any error
 PROJECT_ROOT="$(pwd)"
+MCUBOOT_ROOT="$PROJECT_ROOT/lib/zephyr-workspace/bootloader/mcuboot"
 BOARD="N/A"
 
 if [ $BOARD == "N/A" ]; then
