@@ -15,6 +15,9 @@ index cae4dfb..7fe5fa0 100755
  west sdk install
  
  # START
++cd "$PROJECT_ROOT/git_patches/mcuboot_patches"
++git apply mcuboot.patch
++git apply mcuboot1.patch
 +cd "$PROJECT_ROOT/lib/zephyr-workspace/bootloader/mcuboot/boot/zephyr"
 +west build --no-sysbuild -b nucleo_h723zg
  # END

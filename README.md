@@ -19,8 +19,6 @@ This project is an implementation of F` on Zephyr RTOS, with MCUBoot being built
 
 - Apply the git patch present in ```$PROJECT_ROOT\BOARD_NAME\setup_shell.patch ```
 - Run setup.sh 
-- Apply the rest of the git patch(es) present in ```$PROJECT_ROOT\BOARD_NAME\mcuboot_patches```
-- Run setup.sh
 
 Setup Complete
 
