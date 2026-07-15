@@ -1,7 +1,16 @@
 diff --git a/setup.sh b/setup.sh
-index d0d7bcf..691acfd 100644
+index d0d7bcf..5a0e4f3 100644
 --- a/setup.sh
 +++ b/setup.sh
+@@ -4,7 +4,7 @@ set -e  # Exit on any error
+ PROJECT_ROOT="$(pwd)"
+ MCUBOOT_ROOT="$PROJECT_ROOT/lib/zephyr-workspace/bootloader/mcuboot"
+ PATCH_ROOT="$PROJECT_ROOT/git_patches"
+-BOARD="N/A"
++BOARD="nucleo_h723zg"
+ 
+ if [ $BOARD == "N/A" ]; then
+     echo "Make sure to apply the patches in respect to your board FIRST."
 @@ -81,7 +81,11 @@ west zephyr-export
  west sdk install
  
