@@ -2,7 +2,7 @@
 
 set -e  # Exit on any error
 PROJECT_ROOT="$(pwd)"
-BOARD="N/A"
+BOARD="nucleo_h723zg"
 
 if [ $BOARD == "N/A" ]; then
     echo "Make sure to apply the patches in respect to your board FIRST."
@@ -79,6 +79,11 @@ west zephyr-export
 west sdk install
 
 # START
+cd "$PROJECT_ROOT/git_patches/$BOARD/mcuboot_patches"
+git apply mcuboot.patch
+git apply mcuboot1.patch
+cd "$PROJECT_ROOT/lib/zephyr-workspace/bootloader/mcuboot/boot/zephyr"
+west build --no-sysbuild -b $BOARD
 # END
 
 

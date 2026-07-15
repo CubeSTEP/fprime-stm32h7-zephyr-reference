@@ -1,7 +1,7 @@
 diff --git a/setup.sh b/setup.sh
 old mode 100755
 new mode 100644
-index fa2a944..8359c80
+index fa2a944..731fe8e
 --- a/setup.sh
 +++ b/setup.sh
 @@ -2,7 +2,7 @@
@@ -9,7 +9,7 @@ index fa2a944..8359c80
  set -e  # Exit on any error
  PROJECT_ROOT="$(pwd)"
 -BOARD="N/A"
-+BOARD="nucleo_h7233zg"
++BOARD="nucleo_h723zg"
  
  if [ $BOARD == "N/A" ]; then
      echo "Make sure to apply the patches in respect to your board FIRST."
@@ -17,11 +17,11 @@ index fa2a944..8359c80
  west sdk install
  
  # START
-+cd "$PROJECT_ROOT/git_patches/mcuboot_patches"
++cd "$PROJECT_ROOT/git_patches/$BOARD/mcuboot_patches"
 +git apply mcuboot.patch
 +git apply mcuboot1.patch
 +cd "$PROJECT_ROOT/lib/zephyr-workspace/bootloader/mcuboot/boot/zephyr"
-+west build --no-sysbuild -b nucleo_h723zg
++west build --no-sysbuild -b $BOARD
  # END
  
  
