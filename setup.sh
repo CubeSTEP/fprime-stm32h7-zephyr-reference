@@ -3,6 +3,7 @@
 set -e  # Exit on any error
 PROJECT_ROOT="$(pwd)"
 MCUBOOT_ROOT="$PROJECT_ROOT/lib/zephyr-workspace/bootloader/mcuboot"
+PATCH_ROOT="$PROJECT_ROOT/git_patches"
 BOARD="N/A"
 
 if [ $BOARD == "N/A" ]; then
@@ -80,6 +81,7 @@ west zephyr-export
 west sdk install
 
 # START
+
 # END
 
 
