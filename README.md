@@ -14,7 +14,7 @@ This project is an implementation of F` on Zephyr RTOS, with MCUBoot being built
 
 # Setup
 > [!Note]
-> This reference requires a couple steps of manual setup before it's able to be fully automated by ```bash setup.sh```. 
+> This reference requires a couple steps of manual setup before it's able to be fully automated by ```setup.sh```. 
 >
 
 - Apply the git patch present in ```$PROJECT_ROOT\BOARD_NAME\setup_shell.patch ```
@@ -29,9 +29,9 @@ Setup Complete
 > If possible, use .hex files ONLY. It makes the flashing order of both the MCUBoot application and fprime-zephyr application agonistic. Otherwise, you must manually offset the flashing of the fprime-zephyr application as to not overwrite the MCUBoot application, for which you will flash first.
 >
 The MCUBoot application, after being compiled, is built in ```$PROJECT_ROOT\lib\zephyr-workspace\bootloader\mcuboot\boot\zephyr\build\zephyr```
-- ```bash zephyr.hex``` is what you're looking for. This ```.hex``` file is what contains the MCUBoot bootloader
+- ```zephyr.hex``` is what you're looking for. This ```.hex``` file is what contains the MCUBoot bootloader
 The fprime-zephyr application, after being compiled, is built in ```$PROJECT_ROOT\build-fprime-automatic-zephyr\zephyr```
-- ```bash zephyr.signed.hex``` is what you're looking for, if your intention is to use the fprime-zephyr application with MCUBoot. Otherwise, ```zephyr.hex``` is what you're looking for. ```zephyr.hex``` will NOT work on an MCU with MCUBoot loaded on it.
+- ```zephyr.signed.hex``` is what you're looking for, if your intention is to use the fprime-zephyr application with MCUBoot. Otherwise, ```zephyr.hex``` is what you're looking for. ```zephyr.hex``` will NOT work on an MCU with MCUBoot loaded on it.
 
 # Flashing
 > [!Note]
