@@ -4,7 +4,7 @@ set -e  # Exit on any error
 PROJECT_ROOT="$(pwd)"
 BOARD="N/A"
 
-if [ BOARD == "N/A" ]; then
+if [ $BOARD == "N/A" ]; then
     echo "Make sure to apply the patches in respect to your board FIRST."
     exit 1
 fi
