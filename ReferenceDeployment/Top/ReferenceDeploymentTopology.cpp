@@ -12,10 +12,6 @@
 #include <Fw/Types/MallocAllocator.hpp>
 #include <Os/Mutex.hpp>
 #include <Fw/Logger/Logger.hpp>
-#include <zephyr/drivers/gpio.h>
-
-#define LED0_NODE DT_ALIAS(led0)
-static const struct gpio_dt_spec led = GPIO_DT_SPEC_GET(LED0_NODE, gpios);
 
 // Public functions for use in main program are namespaced with deployment module ReferenceDeployment
 // This is also the namespace where the topology components are instantiated by FPP.
@@ -60,12 +56,6 @@ void configureTopology() {
     rateGroup1.configure(rateGroup1Context, FW_NUM_ARRAY_ELEMENTS(rateGroup1Context));
     rateGroup2.configure(rateGroup2Context, FW_NUM_ARRAY_ELEMENTS(rateGroup2Context));
     rateGroup3.configure(rateGroup3Context, FW_NUM_ARRAY_ELEMENTS(rateGroup3Context));
-
-    Os::File::Status status =
-        gpioDriver.open(::led, Zephyr::ZephyrGpioDriver::GpioConfiguration::OUT);
-    if (status != Os::File::Status::OP_OK) {
-        Fw::Logger::log("[ERROR] Failed to open GPIO pin\n");
-    }
 }
 
 void setupTopology(const TopologyState& state) {
@@ -107,6 +97,13 @@ void setupTopology(const TopologyState& state) {
         potentiometer.configure(state.adcDeviceSpec, potentiometerBuffer, sizeof(potentiometerBuffer));
     #endif
 #endif
+    
+    Os::File::Status status =
+        gpioDriver.open(*state.led, Zephyr::ZephyrGpioDriver::GpioConfiguration::OUT);
+    if (status != Os::File::Status::OP_OK) {
+        Fw::Logger::log("[ERROR] Failed to open GPIO pin\n");
+    }
+    
     // Start rate groups
     rateDriver.start();
 }

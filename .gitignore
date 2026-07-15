@@ -27,3 +27,4 @@ ReferenceDeployment_Old
 # Ignore local CMake build
 cmake-3.27.9*
 
+gds.sh

@@ -1,0 +1,1 @@
+STM32_Programmer_CLI -c port=SWD mode=UR -w build-artifacts/zephyr.hex -v -rst

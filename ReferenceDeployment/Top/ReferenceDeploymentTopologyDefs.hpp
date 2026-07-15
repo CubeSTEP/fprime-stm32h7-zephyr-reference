@@ -16,11 +16,12 @@
 #include "Svc/Health/Health.hpp"
 
 struct device;
+struct gpio_dt_spec;
 
 #ifdef STM32H753I_EVAL
     struct adc_dt_spec;
 #endif
-#include <zephyr/drivers/uart.h>
+
 // ComFprime subtopology configuration phases expect these support objects
 // to be provided by the deployment.
 namespace ComFprime {
@@ -71,6 +72,7 @@ namespace ReferenceDeployment {
      */
     struct TopologyState {
         const struct device* uartDevice;
+        const struct gpio_dt_spec* led;
         #ifdef STM32H753I_EVAL
             const struct device* i2cDevice;
             const struct adc_dt_spec* adcDeviceSpec;
