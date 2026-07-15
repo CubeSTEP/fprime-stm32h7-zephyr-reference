@@ -1,5 +1,7 @@
 diff --git a/setup.sh b/setup.sh
-index cae4dfb..7fe5fa0 100755
+old mode 100755
+new mode 100644
+index fa2a944..8359c80
 --- a/setup.sh
 +++ b/setup.sh
 @@ -2,7 +2,7 @@
@@ -7,11 +9,11 @@ index cae4dfb..7fe5fa0 100755
  set -e  # Exit on any error
  PROJECT_ROOT="$(pwd)"
 -BOARD="N/A"
-+BOARD="nucleo_h723zg"
++BOARD="nucleo_h7233zg"
  
- if [ BOARD == "N/A" ]; then
+ if [ $BOARD == "N/A" ]; then
      echo "Make sure to apply the patches in respect to your board FIRST."
-@@ -79,6 +79,8 @@ west zephyr-export
+@@ -79,6 +79,11 @@ west zephyr-export
  west sdk install
  
  # START
