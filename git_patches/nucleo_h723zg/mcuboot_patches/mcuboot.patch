@@ -1,0 +1,16 @@
+diff --git a/boot/zephyr/prj.conf b/boot/zephyr/prj.conf
+index b824ca1b..a2164949 100644
+--- a/boot/zephyr/prj.conf
++++ b/boot/zephyr/prj.conf
+@@ -29,3 +29,11 @@ CONFIG_CBPRINTF_NANO=y
+ CONFIG_PICOLIBC=y
+ ### Disable malloc arena because we don't need it
+ CONFIG_COMMON_LIBC_MALLOC_ARENA_SIZE=0
++
++# MCUBoot
++CONFIG_BOOT_MAX_IMG_SECTORS_AUTO=n
++CONFIG_BOOT_MAX_IMG_SECTORS=128
++CONFIG_BOOT_SIGNATURE_TYPE_ECDSA_P256=y
++CONFIG_BOOT_ECDSA_TINYCRYPT=y
++CONFIG_BOOT_SIGNATURE_KEY_FILE="root-ec-p256.pem" #TODO: NOT PRODUCTION OK
++CONFIG_BOOT_VALIDATE_SLOT0=n #TODO: NOT PRODUCTION OK, CHANGE TO y EVENTUALLY

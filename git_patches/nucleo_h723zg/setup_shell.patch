@@ -1,0 +1,29 @@
+diff --git a/setup.sh b/setup.sh
+index d0d7bcf..f772d84 100644
+--- a/setup.sh
++++ b/setup.sh
+@@ -4,7 +4,7 @@ set -e  # Exit on any error
+ PROJECT_ROOT="$(pwd)"
+ MCUBOOT_ROOT="$PROJECT_ROOT/lib/zephyr-workspace/bootloader/mcuboot"
+ PATCH_ROOT="$PROJECT_ROOT/git_patches"
+-BOARD="N/A"
++BOARD="nucleo_h723zg"
+ 
+ if [ $BOARD == "N/A" ]; then
+     echo "Make sure to apply the patches in respect to your board FIRST."
+@@ -81,7 +81,14 @@ west zephyr-export
+ west sdk install
+ 
+ # START
+-
++if ! git apply --reverse --check "$PATCH_ROOT/$BOARD/mcuboot_patches/mcuboot.path"; then
++    pip install cryptography
++    cd "$MCUBOOT_ROOT"
++    git apply "$PATCH_ROOT/$BOARD/mcuboot_patches/mcuboot.patch"
++    git apply "$PATCH_ROOT/$BOARD/mcuboot_patches/mcuboot1.patch"
++fi
++cd "$MCUBOOT_ROOT/boot/zephyr"
++west build --no-sysbuild -b $BOARD
+ # END
+ 
+ 

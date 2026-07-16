@@ -1,6 +1,15 @@
 #!/bin/bash
 
 set -e  # Exit on any error
+PROJECT_ROOT="$(pwd)"
+MCUBOOT_ROOT="$PROJECT_ROOT/lib/zephyr-workspace/bootloader/mcuboot"
+PATCH_ROOT="$PROJECT_ROOT/git_patches"
+BOARD="N/A"
+
+if [ $BOARD == "N/A" ]; then
+    echo "Make sure to apply the patches in respect to your board FIRST."
+    exit 1
+fi
 
 # Detect OS
 OS="$(uname -s)"
@@ -47,6 +56,7 @@ echo "==> Current Directory:"
 pwd
 
 echo "==> Fetching git submodules..."
+git submodule sync --recursive
 git submodule update --recursive --init
 
 # Check subdirectory
@@ -63,13 +73,25 @@ echo "==> Entered Directory:"
 pwd
 
 echo "==> Updating Zephyr workspace..."
+# START: CubeSTEP CERBERUS SPECIFIC
+west config manifest.project-filter -- "-.*,+hal_stm32,+cmsis,+cmsis_6,+littlefs,+mcuboot"
+# END
 west update
 west zephyr-export
 west sdk install
 
-cd ../../
+# START
+
+# END
+
+
+
+cd "$PROJECT_ROOT" 
 echo "==> Returned to Directory:"
 pwd
+
+echo "==> Preparing for the build system"
+fprime-util purge -f
 
 echo "==> Generating F´ build system..."
 fprime-util generate
