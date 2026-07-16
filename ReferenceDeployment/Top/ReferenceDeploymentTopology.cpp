@@ -12,10 +12,6 @@
 #include <Fw/Types/MallocAllocator.hpp>
 #include <Os/Mutex.hpp>
 #include <Fw/Logger/Logger.hpp>
-#include <zephyr/drivers/gpio.h>
-
-#define LED0_NODE DT_ALIAS(led0)
-static const struct gpio_dt_spec led = GPIO_DT_SPEC_GET(LED0_NODE, gpios);
 
 // Public functions for use in main program are namespaced with deployment module ReferenceDeployment
 // This is also the namespace where the topology components are instantiated by FPP.
@@ -37,6 +33,11 @@ enum TopologyConstants {
     COMM_PRIORITY = 34,
 };
 
+#ifdef STM32H753I_EVAL
+    // Constants for ADC Potentiometer Configuration
+    U16 potentiometerBuffer[1] = {0};
+#endif
+
 /**
  * \brief configure/setup components in project-specific way
  *
@@ -55,12 +56,6 @@ void configureTopology() {
     rateGroup1.configure(rateGroup1Context, FW_NUM_ARRAY_ELEMENTS(rateGroup1Context));
     rateGroup2.configure(rateGroup2Context, FW_NUM_ARRAY_ELEMENTS(rateGroup2Context));
     rateGroup3.configure(rateGroup3Context, FW_NUM_ARRAY_ELEMENTS(rateGroup3Context));
-
-    Os::File::Status status =
-        gpioDriver.open(::led, Zephyr::ZephyrGpioDriver::GpioConfiguration::OUT);
-    if (status != Os::File::Status::OP_OK) {
-        Fw::Logger::log("[ERROR] Failed to open GPIO pin\n");
-    }
 }
 
 void setupTopology(const TopologyState& state) {
@@ -80,12 +75,38 @@ void setupTopology(const TopologyState& state) {
     loadParameters();
     // Autocoded task kick-off (active components). Function provided by autocoder.
     startTasks(state);
-  // Uplink is configured for receive so a socket task is started
+    // Uplink is configured for receive so a socket task is started
+#ifdef NO_GDS
+    static Svc::BufferManager::BufferBins bins;
+    memset(&bins, 0, sizeof(bins));
+    bins.bins[0].bufferSize = ComFprimeConfig::BuffMgr::commsBuffSize;
+    bins.bins[0].numBuffers = ComFprimeConfig::BuffMgr::commsBuffCount;
+
+    bufferManager.setup(
+        ComFprimeConfig::BuffMgr::commsBuffMgrId,
+        0,
+        ComFprime::Allocation::memAllocator,
+        bins
+    );
+
+    uartDriver.configure(state.uartDevice, state.uartBaud);
+#else
     comDriver.configure(state.uartDevice, state.uartBaud);
+    #ifdef STM32H753I_EVAL
+        i2cDriver.open(state.i2cDevice);
+        potentiometer.configure(state.adcDeviceSpec, potentiometerBuffer, sizeof(potentiometerBuffer));
+    #endif
+#endif
+    
+    Os::File::Status status =
+        gpioDriver.open(*state.led, Zephyr::ZephyrGpioDriver::GpioConfiguration::OUT);
+    if (status != Os::File::Status::OP_OK) {
+        Fw::Logger::log("[ERROR] Failed to open GPIO pin\n");
+    }
+    
     // Start rate groups
     rateDriver.start();
-
-    }
+}
 
 void teardownTopology(const TopologyState& state) {
     // Autocoded (active component) task clean-up. Functions provided by topology autocoder.

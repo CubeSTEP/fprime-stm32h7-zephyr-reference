@@ -22,9 +22,9 @@ ReferenceDeployment_Old
 .DS_Store
 *.gcov
 .cache
-build/
-flashing_and_gds.txt
+/build/
 
 # Ignore local CMake build
 cmake-3.27.9*
 
+gds.sh
