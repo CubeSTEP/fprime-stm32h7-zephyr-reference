@@ -70,7 +70,7 @@ module ReferenceDeployment {
   instance potentiometer: Components.Potentiometer base id 0x1000 \
     queue size Default.QUEUE_SIZE \
     stack size Default.STACK_SIZE \
-    priority 4
+    priority 4 
 
   # ----------------------------------------------------------------------
   # Queued component instances
@@ -111,4 +111,6 @@ module ReferenceDeployment {
   instance gpioDriver: Zephyr.ZephyrGpioDriver base id 0x4E00
 
   instance i2cDriver: Zephyr.ZephyrI2cDriver base id 0x4F00
+
+  instance adcDriver: Zephyr.ZephyrADCDriver base id 0x5000 
 }

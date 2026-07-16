@@ -39,6 +39,7 @@ module ReferenceDeployment {
     instance systemResources
 
     instance gpioDriver
+    instance adcDriver
     instance i2cDriver
     instance prmDb
 
@@ -132,6 +133,11 @@ module ReferenceDeployment {
     connections PotentiometerConnections {
       # Rate Group 3 output is connected to potentiometer's run input
       rateGroup3.RateGroupMemberOut[1] -> potentiometer.run
+    }
+
+    connections ADCConnections {
+      # Rate Group 3 output is connected to adcDriver's poll input
+      rateGroup3.RateGroupMemberOut[2] -> adcDriver.poll
     }
 
   }
