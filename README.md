@@ -28,6 +28,7 @@ Setup Complete
 >
 The MCUBoot application, after being compiled, is built in ```$PROJECT_ROOT\lib\zephyr-workspace\bootloader\mcuboot\boot\zephyr\build\zephyr```
 - ```zephyr.hex``` is what you're looking for. This ```.hex``` file is what contains the MCUBoot bootloader
+
 The fprime-zephyr application, after being compiled, is built in ```$PROJECT_ROOT\build-fprime-automatic-zephyr\zephyr```
 - ```zephyr.signed.hex``` is what you're looking for, if your intention is to use the fprime-zephyr application with MCUBoot. Otherwise, ```zephyr.hex``` is what you're looking for. ```zephyr.hex``` will NOT work on an MCU with MCUBoot loaded on it.
 
