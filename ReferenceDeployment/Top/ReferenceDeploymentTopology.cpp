@@ -95,7 +95,7 @@ void setupTopology(const TopologyState& state) {
     #ifdef STM32H753I_EVAL
         i2cDriver.open(state.i2cDevice);
         potentiometer.configure(state.adcDeviceSpec, potentiometerBuffer, sizeof(potentiometerBuffer));
-        adcDriver.configure(state.adcDeviceSpec, potentiometerBuffer, sizeof(potentiometerBuffer));
+        adcDriver.configure(state.adcDeviceSpec);
     #endif
 #endif
     
